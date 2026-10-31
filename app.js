@@ -31,6 +31,14 @@
   let dpr = 1;
   const photons = [];
   const electrons = [];
+  const microPhotons = [];
+  const microElectrons = [];
+  const microFlashes = [];
+  let microCanvas = null;
+  let microCtx = null;
+  let microW = 0;
+  let microH = 0;
+  let microDpr = 1;
   const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   function metal() {
@@ -86,12 +94,14 @@
       buildMetalOptions();
       bindControls();
       initCanvas();
+      initMicro();
       initChart();
       renderFormulas();
       renderTable();
       syncControls();
       update();
       initReveal();
+      initTabs();
       startLoop();
     } catch (err) {
       window.__errors.push('init: ' + (err && err.message ? err.message : String(err)));
@@ -118,6 +128,44 @@
     setTimeout(function () {
       for (let k = 0; k < els.length; k++) els[k].classList.add('is-visible');
     }, 2400);
+  }
+
+  function initTabs() {
+    const buttons = document.querySelectorAll('.tab-btn');
+    if (!buttons.length) return;
+    const panes = document.querySelectorAll('.tab-pane');
+    const note = $('tabs-note');
+    const notes = {
+      curve: '虚线为遏止电压 −U0，圆点为工作点',
+      data: '记录当前参数，导出 CSV',
+      theory: '三条公式与常见误区'
+    };
+    function setTab(name) {
+      for (let k = 0; k < buttons.length; k++) {
+        const on = buttons[k].getAttribute('data-tab') === name;
+        buttons[k].classList.toggle('is-active', on);
+        buttons[k].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      for (let k = 0; k < panes.length; k++) {
+        panes[k].classList.toggle('is-active', panes[k].getAttribute('data-pane') === name);
+      }
+      if (note && notes[name]) note.textContent = notes[name];
+      if (name === 'curve' && chart) {
+        setTimeout(function () { chart.resize(); }, 40);
+      }
+      if (name === 'data') renderTable();
+    }
+    for (let k = 0; k < buttons.length; k++) {
+      buttons[k].addEventListener('click', function () { setTab(this.getAttribute('data-tab')); });
+    }
+    const navTheory = $('nav-theory');
+    if (navTheory) {
+      navTheory.addEventListener('click', function (e) {
+        e.preventDefault();
+        setTab('theory');
+      });
+    }
+    setTab('curve');
   }
 
   function buildMetalOptions() {
@@ -212,8 +260,6 @@
     paintRange($('lambda'));
     paintRange($('intensity'));
     paintRange($('bias'));
-    $('hud-lambda').textContent = state.lambda + ' nm';
-    $('hud-energy').textContent = fmt(c.E, 2) + ' eV';
 
     $('r-lambda').textContent = state.lambda + ' nm';
     $('r-nu').textContent = fmt(c.nu, 1) + ' THz';
@@ -229,6 +275,7 @@
     updateStatus(c);
     updateChart(c);
     drawStage(c);
+    drawMicro(c);
   }
 
   function updateStatus(c) {
@@ -271,6 +318,24 @@
     if (hudStatus) {
       hudStatus.textContent = text;
       hudStatus.setAttribute('data-state', kind);
+    }
+    const headStatus = $('head-status');
+    if (headStatus) {
+      headStatus.textContent = text;
+      headStatus.setAttribute('data-state', kind);
+    }
+    const microNote = $('micro-note');
+    if (microNote) {
+      microNote.setAttribute('data-state', kind);
+      if (state.intensity === 0) {
+        microNote.textContent = '光强为 0 · 没有光子到达金属';
+      } else if (!c.emitting) {
+        microNote.textContent = 'hν ' + fmt(c.E, 2) + ' eV < W ' + fmt(c.m.workEv, 2) + ' eV · 光子被吸收';
+      } else if (c.i <= 1e-9) {
+        microNote.textContent = '电子已逸出，但被 ' + fmt(c.u0, 2) + ' V 反向电压遏止';
+      } else {
+        microNote.textContent = 'hν ' + fmt(c.E, 2) + ' eV > W ' + fmt(c.m.workEv, 2) + ' eV · 电子带走 ' + fmt(c.ek, 2) + ' eV';
+      }
     }
     detail.textContent = note;
   }
@@ -418,6 +483,152 @@
     canvas.height = Math.round(viewH * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (current) drawStage(current);
+  }
+
+  /* ---------- 微观世界 ---------- */
+
+  function initMicro() {
+    microCanvas = $('micro-canvas');
+    if (!microCanvas) return;
+    microCtx = microCanvas.getContext('2d');
+    resizeMicro();
+    if (window.ResizeObserver) {
+      new ResizeObserver(resizeMicro).observe(microCanvas.parentElement);
+    } else {
+      window.addEventListener('resize', resizeMicro);
+    }
+    for (let k = 0; k < 9; k++) {
+      microPhotons.push({ t: Math.random(), lane: Math.random() * 2 - 1, speed: 0.28 + Math.random() * 0.18 });
+    }
+  }
+
+  function resizeMicro() {
+    if (!microCanvas) return;
+    microDpr = Math.min(window.devicePixelRatio || 1, 2);
+    microW = microCanvas.clientWidth;
+    microH = microCanvas.clientHeight;
+    if (!microW || !microH) return;
+    microCanvas.width = Math.round(microW * microDpr);
+    microCanvas.height = Math.round(microH * microDpr);
+    microCtx.setTransform(microDpr, 0, 0, microDpr, 0, 0);
+    if (current) drawMicro(current);
+  }
+
+  function drawMicro(c) {
+    if (!microCtx || !microW || !microH || !c) return;
+    const w = microW;
+    const h = microH;
+    microCtx.clearRect(0, 0, w, h);
+
+    // 背景微网格
+    microCtx.strokeStyle = 'rgba(104, 190, 220, 0.07)';
+    microCtx.lineWidth = 0.5;
+    for (let x = 0; x < w; x += 16) {
+      microCtx.beginPath(); microCtx.moveTo(x, 0); microCtx.lineTo(x, h); microCtx.stroke();
+    }
+    for (let y = 0; y < h; y += 16) {
+      microCtx.beginPath(); microCtx.moveTo(0, y); microCtx.lineTo(w, y); microCtx.stroke();
+    }
+
+    // 金属晶格
+    const cols = 7;
+    const rows = 3;
+    const left = w * 0.16;
+    const right = w * 0.84;
+    const bottom = h * 0.82;
+    const rowGap = h * 0.095;
+    const blockTop = bottom - rowGap * (rows - 1) - 12;
+    const glass = microCtx.createLinearGradient(0, blockTop, 0, bottom + 10);
+    glass.addColorStop(0, 'rgba(63, 216, 232, 0.045)');
+    glass.addColorStop(1, 'rgba(63, 216, 232, 0.012)');
+    microCtx.fillStyle = glass;
+    microCtx.strokeStyle = 'rgba(104, 190, 220, 0.18)';
+    microCtx.lineWidth = 1;
+    microCtx.beginPath();
+    if (microCtx.roundRect) microCtx.roundRect(left - 12, blockTop, right - left + 24, bottom - blockTop + 18, 8);
+    else microCtx.rect(left - 12, blockTop, right - left + 24, bottom - blockTop + 18);
+    microCtx.fill();
+    microCtx.stroke();
+
+    for (let r = 0; r < rows; r++) {
+      const y = bottom - r * rowGap;
+      for (let cix = 0; cix < cols; cix++) {
+        const x = left + (right - left) * cix / (cols - 1);
+        microCtx.beginPath();
+        microCtx.arc(x, y, 3.1, 0, Math.PI * 2);
+        microCtx.fillStyle = 'rgba(63, 216, 232, 0.20)';
+        microCtx.fill();
+        microCtx.strokeStyle = 'rgba(104, 210, 235, 0.38)';
+        microCtx.lineWidth = 0.8;
+        microCtx.stroke();
+      }
+    }
+
+    // 光子
+    const color = wavelengthColor(state.lambda);
+    const rgb = color.r + ',' + color.g + ',' + color.b;
+    const active = Math.max(0, Math.round(state.intensity / 100 * 8));
+    for (let k = 0; k < active && k < microPhotons.length; k++) {
+      const ph = microPhotons[k];
+      const x = w * 0.05 + (w * 0.41) * ph.t;
+      const y = h * 0.08 + (h * 0.54) * ph.t + ph.lane * 7;
+      const trail = microCtx.createLinearGradient(x - 15, y - 4, x, y);
+      trail.addColorStop(0, 'rgba(' + rgb + ', 0)');
+      trail.addColorStop(1, 'rgba(' + rgb + ', 0.75)');
+      microCtx.strokeStyle = trail;
+      microCtx.lineWidth = 1.4;
+      microCtx.beginPath();
+      microCtx.moveTo(x - 15, y - 4);
+      microCtx.lineTo(x, y);
+      microCtx.stroke();
+      microCtx.beginPath();
+      microCtx.arc(x, y, 2.1, 0, Math.PI * 2);
+      microCtx.fillStyle = 'rgba(' + rgb + ', 0.95)';
+      microCtx.fill();
+    }
+
+    // 光电子
+    for (let k = 0; k < microElectrons.length; k++) {
+      const e = microElectrons[k];
+      const x = e.x + Math.sin(e.t * Math.PI) * 7;
+      const y = e.y - e.t * h * 0.44;
+      microCtx.strokeStyle = 'rgba(63, 216, 232, 0.30)';
+      microCtx.lineWidth = 1;
+      microCtx.beginPath();
+      microCtx.moveTo(x - 7, y + 4);
+      microCtx.lineTo(x, y);
+      microCtx.stroke();
+      microCtx.beginPath();
+      microCtx.arc(x, y, 2.2, 0, Math.PI * 2);
+      microCtx.fillStyle = 'rgba(63, 216, 232, 0.95)';
+      microCtx.fill();
+    }
+
+    // 吸收/无逸出闪光
+    for (let k = 0; k < microFlashes.length; k++) {
+      const f = microFlashes[k];
+      const a = Math.max(0, f.life / f.max);
+      microCtx.strokeStyle = 'rgba(255, 107, 107, ' + (a * 0.9) + ')';
+      microCtx.lineWidth = 1.4;
+      microCtx.beginPath();
+      microCtx.moveTo(f.x - 4, f.y - 4);
+      microCtx.lineTo(f.x + 4, f.y + 4);
+      microCtx.moveTo(f.x + 4, f.y - 4);
+      microCtx.lineTo(f.x - 4, f.y + 4);
+      microCtx.stroke();
+    }
+
+    // 标注
+    microCtx.font = '8px "Cascadia Code", Consolas, monospace';
+    microCtx.fillStyle = 'rgba(169, 191, 210, 0.7)';
+    microCtx.textAlign = 'left';
+    microCtx.fillText('光子 hν', 6, 12);
+    microCtx.fillStyle = 'rgba(63, 216, 232, 0.85)';
+    microCtx.textAlign = 'right';
+    microCtx.fillText(c.emitting ? 'e⁻ 逸出' : 'e⁻ 束缚', w - 6, 12);
+    microCtx.fillStyle = 'rgba(111, 135, 156, 0.8)';
+    microCtx.textAlign = 'left';
+    microCtx.fillText('金属晶格', 6, h - 5);
   }
 
   function wavelengthColor(nm) {
@@ -591,7 +802,10 @@
       const dt = Math.min(0.05, (ts - lastTs) / 1000);
       lastTs = ts;
       step(dt);
-      if (current) drawStage(current);
+      if (current) {
+        drawStage(current);
+        drawMicro(current);
+      }
     };
     rafId = requestAnimationFrame(loop);
   }
@@ -623,6 +837,40 @@
     for (let k = electrons.length - 1; k >= 0; k--) {
       electrons[k].t += dt * electrons[k].speed;
       if (electrons[k].t >= 1) electrons.splice(k, 1);
+    }
+
+    // 微观世界
+    const activeMicro = Math.max(0, Math.round(state.intensity / 100 * 8));
+    for (let k = 0; k < microPhotons.length; k++) {
+      const ph = microPhotons[k];
+      if (k >= activeMicro) { ph.t = 0; continue; }
+      ph.t += dt * ph.speed;
+      if (ph.t >= 1) {
+        ph.t = 0;
+        ph.lane = Math.random() * 2 - 1;
+        const hitX = microW * 0.46 + ph.lane * 5;
+        const hitY = microH * 0.62;
+        if (current.emitting && current.i > 0) {
+          if (microElectrons.length < 16) {
+            microElectrons.push({
+              t: 0,
+              x: hitX,
+              y: hitY,
+              speed: 0.45 + 0.55 * Math.sqrt(current.ek / 1.6)
+            });
+          }
+        } else if (microW > 0) {
+          microFlashes.push({ x: hitX, y: hitY, life: 0.36, max: 0.36 });
+        }
+      }
+    }
+    for (let k = microElectrons.length - 1; k >= 0; k--) {
+      microElectrons[k].t += dt * microElectrons[k].speed;
+      if (microElectrons[k].t >= 1) microElectrons.splice(k, 1);
+    }
+    for (let k = microFlashes.length - 1; k >= 0; k--) {
+      microFlashes[k].life -= dt;
+      if (microFlashes[k].life <= 0) microFlashes.splice(k, 1);
     }
   }
 

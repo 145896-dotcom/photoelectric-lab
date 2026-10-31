@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="光电效应单屏实验台：四个控件、宏观舞台、微观世界、I–U 曲线与数据记录。">
+  <title>光电效应实验台 · 单屏工作台</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    window.__errors = [];
+    window.addEventListener('error', function (e) {
+      window.__errors.push(String((e && (e.message || e.error)) || 'unknown error'));
+    });
+    window.addEventListener('unhandledrejection', function (e) {
+      window.__errors.push('unhandledrejection: ' + String(e && e.reason));
+    });
+  </script>
+</head>
+<body class="lab-page">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-a" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-b" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z"/>
+          <circle cx="16" cy="16" r="3.2" fill="currentColor" stroke="none"/>
+          <path d="M16 6.5v4M16 21.5v4M6.8 11l3.4 2M21.8 19l3.4 2M6.8 21l3.4-2M21.8 13l3.4-2" stroke-linecap="round" opacity=".55"/>
+        </svg>
+      </span>
+      <span class="brand-text">光电实验室<small>PHOTOELECTRIC LAB</small></span>
+    </a>
+    <nav aria-label="页面导航">
+      <a href="index.html">首页</a>
+      <a href="lab.html" class="is-active">实验台</a>
+      <a href="#tabs-panel" id="nav-theory">原理</a>
+      <a class="nav-ext" href="https://github.com/145896-dotcom/photoelectric-lab" target="_blank" rel="noopener">源码<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+  </header>
+
+  <main class="lab-shell">
+    <div class="lab-head">
+      <div class="lab-title">
+        <p class="section-kicker"><span>01</span>EXPERIMENT · PHOTOELECTRIC WORKBENCH</p>
+        <h1>光电效应实验台</h1>
+      </div>
+      <div class="lab-head-right">
+        <span class="head-status" id="head-status" data-state="ok">有光电流</span>
+        <a class="btn btn-ghost btn-sm" href="index.html">返回首页</a>
+      </div>
+    </div>
+
+    <div class="lab-grid">
+      <aside class="panel controls" aria-label="实验参数">
+        <div class="control">
+          <div class="control-top">
+            <span class="control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 12c2.2 0 2.2-5.5 4.5-5.5S9 17.5 11.5 17.5 14 6.5 16.5 6.5 19 12 22 12"/></svg>
+            </span>
+            <label for="lambda">波长 <em>λ</em></label>
+            <output id="lambda-out" for="lambda">400 nm</output>
+          </div>
+          <input type="range" id="lambda" min="200" max="700" step="5" value="400">
+          <div class="scale"><span>200 nm 紫外</span><span>700 nm 红</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <span class="control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></svg>
+            </span>
+            <label for="metal">金属 <em>W</em></label>
+          </div>
+          <div class="select-wrap">
+            <select id="metal" aria-label="选择金属"></select>
+            <svg class="select-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="hint" id="metal-hint">—</p>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <span class="control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+            </span>
+            <label for="intensity">光强 <em>I₀</em></label>
+            <output id="intensity-out" for="intensity">100%</output>
+          </div>
+          <input type="range" id="intensity" min="0" max="100" step="1" value="100">
+          <p class="hint">只改电子数目，不改单电子能量。</p>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <span class="control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/></svg>
+            </span>
+            <label for="bias">电压 <em>U</em></label>
+            <output id="bias-out" for="bias">0.00 V</output>
+          </div>
+          <input type="range" id="bias" min="-3" max="3" step="0.05" value="0">
+          <div class="scale"><span>−3 V 反向</span><span>+3 V 正向</span></div>
+        </div>
+
+        <div class="control-note">
+          <span>QUICK GUIDE</span>
+          <p><b>①</b>波长 → 判断能否发射</p>
+          <p><b>②</b>光强 → 看电流大小</p>
+          <p><b>③</b>反向电压 → 找 U<sub>0</sub></p>
+        </div>
+
+        <div class="presets" role="group" aria-label="预设场景">
+          <button type="button" class="btn btn-preset" id="preset-red" aria-pressed="false"><span>红光强光</span><em>650 nm</em></button>
+          <button type="button" class="btn btn-preset" id="preset-uv" aria-pressed="false"><span>紫外弱光</span><em>250 nm</em></button>
+          <button type="button" class="btn btn-preset" id="preset-cutoff" aria-pressed="false"><span>刚好截止</span><em>−0.96 V</em></button>
+          <button type="button" class="btn btn-preset" id="preset-reverse" aria-pressed="false"><span>反向截止</span><em>−1.20 V</em></button>
+        </div>
+      </aside>
+
+      <section class="panel stage" aria-label="宏观实验舞台">
+        <canvas id="lab-canvas" role="img" aria-label="光子从光源射向金属，逸出电子飞向阳极的示意图"></canvas>
+        <span class="corner tl" aria-hidden="true"></span>
+        <span class="corner tr" aria-hidden="true"></span>
+        <span class="corner bl" aria-hidden="true"></span>
+        <span class="corner br" aria-hidden="true"></span>
+        <div class="stage-legend">
+          <span><i class="dot photon"></i>光子</span>
+          <span><i class="dot electron"></i>光电子</span>
+          <span><i class="dot plate"></i>金属（阴极）</span>
+        </div>
+      </section>
+
+      <aside class="panel readouts" aria-live="polite" aria-label="实时读数">
+        <div class="readout"><span>波长 λ</span><strong id="r-lambda">400 nm</strong></div>
+        <div class="readout"><span>频率 ν</span><strong id="r-nu">—</strong></div>
+        <div class="readout"><span>光子能量 E</span><strong id="r-energy">—</strong></div>
+        <div class="readout"><span>逸出功 W</span><strong id="r-work">—</strong></div>
+        <div class="readout"><span>最大初动能 E<sub>k</sub></span><strong id="r-kinetic">—</strong></div>
+        <div class="readout"><span>遏止电压 U<sub>0</sub></span><strong id="r-u0">—</strong></div>
+        <div class="readout readout-accent"><span>光电流 I</span><strong id="r-current">—</strong></div>
+        <div class="status" id="status" data-state="ok">—</div>
+        <p class="status-detail" id="status-detail"></p>
+        <p class="readout-foot">MODEL · hν − W = E<sub>k</sub> &nbsp;/&nbsp; eU<sub>0</sub> = E<sub>k</sub></p>
+      </aside>
+
+      <section class="panel tabs-panel" id="tabs-panel" aria-label="曲线、数据与原理">
+        <div class="tabs-head">
+          <div class="tabs" role="tablist" aria-label="实验台面板">
+            <button type="button" class="tab-btn is-active" data-tab="curve" role="tab" aria-selected="true">I–U 曲线</button>
+            <button type="button" class="tab-btn" data-tab="data" role="tab" aria-selected="false">数据记录</button>
+            <button type="button" class="tab-btn" data-tab="theory" role="tab" aria-selected="false">原理</button>
+          </div>
+          <span class="tabs-note" id="tabs-note">虚线为遏止电压 −U<sub>0</sub>，圆点为工作点</span>
+        </div>
+        <div class="tab-body">
+          <div class="tab-pane is-active" data-pane="curve">
+            <div class="chart-wrap"><canvas id="iv-chart" role="img" aria-label="光电流随电压变化的关系曲线"></canvas></div>
+          </div>
+          <div class="tab-pane" data-pane="data">
+            <div class="data-actions">
+              <button type="button" class="btn btn-primary btn-sm" id="record">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                记录
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm" id="export">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M5 7l3 3 3-3M3 13h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                导出 CSV
+              </button>
+              <span class="data-count" id="data-count">0 条记录</span>
+            </div>
+            <div class="table-wrap">
+              <table id="data-table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">金属</th>
+                    <th scope="col">λ / nm</th>
+                    <th scope="col">光强 / %</th>
+                    <th scope="col">U / V</th>
+                    <th scope="col">E / eV</th>
+                    <th scope="col">E<sub>k</sub> / eV</th>
+                    <th scope="col">I / μA</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane" data-pane="theory">
+            <div class="theory-grid">
+              <div class="theory-card">
+                <span>01</span>
+                <div class="formula" data-tex="E = h\nu = \dfrac{hc}{\lambda}">E = hν = hc/λ</div>
+                <p>光子能量</p>
+              </div>
+              <div class="theory-card">
+                <span>02</span>
+                <div class="formula" data-tex="E_k = h\nu - W">Ek = hν − W</div>
+                <p>最大初动能</p>
+              </div>
+              <div class="theory-card">
+                <span>03</span>
+                <div class="formula" data-tex="eU_0 = E_k">eU0 = Ek</div>
+                <p>遏止电压</p>
+              </div>
+            </div>
+            <p class="theory-line"><strong>频率</strong>决定能不能打出电子、打出的电子多快；<strong>光强</strong>只决定打出多少个电子。</p>
+            <ul class="theory-list">
+              <li>光强只改饱和电流，不改 E<sub>k</sub> 与 U<sub>0</sub>。</li>
+              <li>E ≤ W 时无论光多强都不发射；临界点按截止处理。</li>
+              <li>I–U 曲线为教学简化：反向线性衰减，正向饱和平台。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel micro-panel" aria-label="微观世界">
+        <div class="micro-head">
+          <div class="micro-title"><span class="micro-kicker">MICRO WORLD</span><h2>微观世界</h2></div>
+          <span class="micro-live"><i></i>实时</span>
+        </div>
+        <canvas id="micro-canvas" role="img" aria-label="光子撞击金属晶格并逸出电子的微观示意"></canvas>
+        <p class="micro-note" id="micro-note">—</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="vendor/katex/katex.min.js"></script>
+  <script src="vendor/chart.umd.js"></script>
+  <script src="config.js"></script>
+  <script src="physics.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
