@@ -70,6 +70,15 @@
     return Number(value).toFixed(digits);
   }
 
+  function paintRange(el) {
+    if (!el) return;
+    const min = Number(el.min);
+    const max = Number(el.max);
+    const value = Number(el.value);
+    const pct = max > min ? ((value - min) / (max - min)) * 100 : 0;
+    el.style.setProperty('--fill', pct.toFixed(2) + '%');
+  }
+
   /* ---------- 初始化 ---------- */
 
   function init() {
@@ -82,11 +91,33 @@
       renderTable();
       syncControls();
       update();
+      initReveal();
       startLoop();
     } catch (err) {
       window.__errors.push('init: ' + (err && err.message ? err.message : String(err)));
       if (window.console) console.error(err);
     }
+  }
+
+  function initReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      for (let k = 0; k < els.length; k++) els[k].classList.add('is-visible');
+      return;
+    }
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    for (let k = 0; k < els.length; k++) io.observe(els[k]);
+    setTimeout(function () {
+      for (let k = 0; k < els.length; k++) els[k].classList.add('is-visible');
+    }, 2400);
   }
 
   function buildMetalOptions() {
@@ -134,7 +165,7 @@
   }
 
   function clearPresetActive() {
-    const buttons = document.querySelectorAll('.presets .btn-small');
+    const buttons = document.querySelectorAll('.presets .btn-preset');
     for (let k = 0; k < buttons.length; k++) {
       buttons[k].classList.remove('is-active');
       buttons[k].setAttribute('aria-pressed', 'false');
@@ -178,6 +209,11 @@
     $('lambda-out').textContent = state.lambda + ' nm';
     $('intensity-out').textContent = state.intensity + '%';
     $('bias-out').textContent = fmt(state.bias, 2) + ' V';
+    paintRange($('lambda'));
+    paintRange($('intensity'));
+    paintRange($('bias'));
+    $('hud-lambda').textContent = state.lambda + ' nm';
+    $('hud-energy').textContent = fmt(c.E, 2) + ' eV';
 
     $('r-lambda').textContent = state.lambda + ' nm';
     $('r-nu').textContent = fmt(c.nu, 1) + ' THz';
@@ -193,8 +229,6 @@
     updateStatus(c);
     updateChart(c);
     drawStage(c);
-
-    if (reduceMotion) drawStage(c);
   }
 
   function updateStatus(c) {
@@ -233,6 +267,11 @@
 
     status.textContent = text;
     status.setAttribute('data-state', kind);
+    const hudStatus = $('hud-status');
+    if (hudStatus) {
+      hudStatus.textContent = text;
+      hudStatus.setAttribute('data-state', kind);
+    }
     detail.textContent = note;
   }
 
@@ -252,8 +291,16 @@
           {
             label: 'I–U 曲线',
             data: [],
-            borderColor: '#1f6f7f',
-            backgroundColor: 'rgba(31, 111, 127, 0.10)',
+            borderColor: '#3fd8e8',
+            backgroundColor: function (context) {
+              const chart = context.chart;
+              const area = chart.chartArea;
+              if (!area) return 'rgba(63, 216, 232, 0.06)';
+              const g = chart.ctx.createLinearGradient(0, area.top, 0, area.bottom);
+              g.addColorStop(0, 'rgba(63, 216, 232, 0.30)');
+              g.addColorStop(1, 'rgba(63, 216, 232, 0.01)');
+              return g;
+            },
             borderWidth: 2,
             pointRadius: 0,
             fill: true,
@@ -262,8 +309,8 @@
           {
             label: '工作点',
             data: [],
-            borderColor: '#fffdf7',
-            backgroundColor: '#c8791f',
+            borderColor: '#071321',
+            backgroundColor: '#f5a524',
             borderWidth: 2,
             pointRadius: 5,
             pointHoverRadius: 7,
@@ -272,7 +319,7 @@
           {
             label: '遏止电压',
             data: [],
-            borderColor: '#a33a2e',
+            borderColor: '#ff6b6b',
             borderWidth: 1.5,
             borderDash: [5, 4],
             pointRadius: 0,
@@ -288,6 +335,13 @@
         plugins: {
           legend: { display: false },
           tooltip: {
+            backgroundColor: 'rgba(5, 14, 26, 0.94)',
+            borderColor: 'rgba(104, 210, 235, 0.35)',
+            borderWidth: 1,
+            titleColor: '#e8f4fb',
+            bodyColor: '#a9bfd2',
+            padding: 10,
+            displayColors: false,
             callbacks: {
               label: function (item) {
                 return item.dataset.label + '：' + Number(item.parsed.y).toFixed(2) + ' μA';
@@ -300,16 +354,18 @@
             type: 'linear',
             min: -3,
             max: 3,
-            title: { display: true, text: '电压 U / V', color: '#7b8398' },
-            grid: { color: 'rgba(20, 33, 61, 0.06)' },
-            ticks: { color: '#7b8398', stepSize: 1 }
+            border: { display: false },
+            title: { display: true, text: '电压 U / V', color: '#6f879c', font: { size: 10 } },
+            grid: { color: 'rgba(104, 190, 220, 0.08)' },
+            ticks: { color: '#6f879c', stepSize: 1, font: { size: 10 } }
           },
           y: {
             min: 0,
             max: MAX_I * 1.08,
-            title: { display: true, text: '光电流 I / μA', color: '#7b8398' },
-            grid: { color: 'rgba(20, 33, 61, 0.06)' },
-            ticks: { color: '#7b8398', stepSize: 1 }
+            border: { display: false },
+            title: { display: true, text: '光电流 I / μA', color: '#6f879c', font: { size: 10 } },
+            grid: { color: 'rgba(104, 190, 220, 0.08)' },
+            ticks: { color: '#6f879c', stepSize: 1, font: { size: 10 } }
           }
         }
       }
@@ -412,30 +468,30 @@
     ctx.arc(lampX, lampY, 10, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#7b8398';
+    ctx.fillStyle = '#8fa8bd';
     ctx.font = '12px "Microsoft YaHei", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('光源', lampX, lampY + 30);
     if (color.uv) {
-      ctx.fillStyle = '#6f5bb5';
+      ctx.fillStyle = '#a98bff';
       ctx.fillText('紫外', lampX, lampY + 46);
     }
 
     // 阴极板
     const plateGrad = ctx.createLinearGradient(plateX, 0, plateX + 12, 0);
-    plateGrad.addColorStop(0, '#2a7f8f');
-    plateGrad.addColorStop(1, '#14505c');
+    plateGrad.addColorStop(0, '#3fd8e8');
+    plateGrad.addColorStop(1, '#0b6f86');
     ctx.fillStyle = plateGrad;
     roundRect(plateX, topY, 12, bottomY - topY, 6);
     ctx.fill();
 
     // 阳极
-    ctx.fillStyle = '#b9ae99';
+    ctx.fillStyle = '#405a70';
     roundRect(anodeX, topY, 7, bottomY - topY, 3);
     ctx.fill();
 
     // 导线与电流表
-    ctx.strokeStyle = 'rgba(20, 33, 61, 0.35)';
+    ctx.strokeStyle = 'rgba(104, 190, 220, 0.28)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(plateX + 6, bottomY + 6);
@@ -446,9 +502,9 @@
 
     // 标签
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#49536b';
+    ctx.fillStyle = '#a9bfd2';
     ctx.fillText('金属（阴极）', plateX + 6, topY - 12);
-    ctx.fillStyle = '#7b8398';
+    ctx.fillStyle = '#6f879c';
     ctx.fillText('阳极', anodeX + 3, topY - 12);
 
     // 光子
@@ -477,11 +533,11 @@
       const e = electrons[k];
       const x = plateX + 12 + (anodeX - plateX - 12) * e.t;
       const y = e.y + Math.sin(e.t * Math.PI) * e.bend;
-      ctx.fillStyle = 'rgba(31, 111, 127, ' + (0.35 + 0.45 * (1 - e.t)) + ')';
+      ctx.fillStyle = 'rgba(63, 216, 232, ' + (0.35 + 0.45 * (1 - e.t)) + ')';
       ctx.beginPath();
       ctx.arc(x, y, 3.4, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(31, 111, 127, 0.25)';
+      ctx.strokeStyle = 'rgba(63, 216, 232, 0.25)';
       ctx.beginPath();
       ctx.moveTo(x - 9, y);
       ctx.lineTo(x - 2, y);
@@ -493,24 +549,24 @@
     const meterH = 46;
     const mx = viewW - meterW - 16;
     const my = viewH - meterH - 14;
-    ctx.fillStyle = 'rgba(255, 252, 244, 0.94)';
-    ctx.strokeStyle = 'rgba(216, 208, 191, 1)';
+    ctx.fillStyle = 'rgba(4, 12, 22, 0.88)';
+    ctx.strokeStyle = 'rgba(104, 210, 235, 0.35)';
     ctx.lineWidth = 1;
     roundRect(mx, my, meterW, meterH, 10);
     ctx.fill();
     ctx.stroke();
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#7b8398';
+    ctx.fillStyle = '#6f879c';
     ctx.font = '11px "Microsoft YaHei", sans-serif';
     ctx.fillText('光电流 I', mx + 12, my + 16);
-    ctx.fillStyle = c && c.i > 0 ? '#8c4a12' : '#7b8398';
+    ctx.fillStyle = c && c.i > 0 ? '#3fd8e8' : '#6f879c';
     ctx.font = '600 16px "Cascadia Code", Consolas, monospace';
     ctx.fillText((c ? c.i.toFixed(2) : '0.00') + ' μA', mx + 12, my + 36);
 
     // 无发射提示
     if (c && !c.emitting) {
       ctx.textAlign = 'center';
-      ctx.fillStyle = 'rgba(163, 58, 46, 0.75)';
+      ctx.fillStyle = 'rgba(255, 107, 107, 0.9)';
       ctx.font = '12px "Microsoft YaHei", sans-serif';
       ctx.fillText('光子能量不足，无电子逸出', (plateX + anodeX) / 2, viewH - 54);
     }
@@ -618,14 +674,16 @@
       tr.appendChild(td);
       tbody.appendChild(tr);
     } else {
+      const labels = ['序号', '金属', 'λ / nm', '光强 / %', 'U / V', 'E / eV', 'Eₖ / eV', 'I / μA'];
       state.records.forEach(function (r, idx) {
         const tr = document.createElement('tr');
         [
           String(idx + 1), r.metal, String(r.lambda), String(r.intensity),
           r.bias.toFixed(2), r.energy.toFixed(2), r.kinetic.toFixed(2), r.current.toFixed(2)
-        ].forEach(function (text) {
+        ].forEach(function (text, cellIndex) {
           const td = document.createElement('td');
           td.textContent = text;
+          td.setAttribute('data-label', labels[cellIndex]);
           tr.appendChild(td);
         });
         tbody.appendChild(tr);

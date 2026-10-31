@@ -19,123 +19,203 @@
   </script>
 </head>
 <body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-a" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-b" aria-hidden="true"></div>
+
   <header class="topbar">
-    <a class="brand" href="#top"><span class="brand-dot" aria-hidden="true"></span>光电实验室</a>
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z"/>
+          <circle cx="16" cy="16" r="3.2" fill="currentColor" stroke="none"/>
+          <path d="M16 6.5v4M16 21.5v4M6.8 11l3.4 2M21.8 19l3.4 2M6.8 21l3.4-2M21.8 13l3.4-2" stroke-linecap="round" opacity=".55"/>
+        </svg>
+      </span>
+      <span class="brand-text">光电实验室<small>PHOTOELECTRIC LAB</small></span>
+    </a>
     <nav aria-label="页面导航">
-      <a href="#lab">实验台</a>
-      <a href="#data">数据</a>
-      <a href="#principle">原理</a>
+      <a href="#lab"><span>01</span>实验台</a>
+      <a href="#data"><span>02</span>数据</a>
+      <a href="#principle"><span>03</span>原理</a>
+      <a class="nav-ext" href="https://github.com/145896-dotcom/photoelectric-lab" target="_blank" rel="noopener">源码<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
   </header>
 
   <main id="top">
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">PHOTOELECTRIC EFFECT · 光电效应</p>
-        <h1>一束光，<br>能打出电子吗？</h1>
+        <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span>PHOTOELECTRIC EFFECT<span class="slash">/</span>光电效应</p>
+        <h1>一束光，<br><span class="grad">能打出电子吗？</span></h1>
         <p class="lead">调节波长、金属、光强与电压，观察光电流如何响应——并找出“红光再强也打不出电子”的原因。</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#lab">进入实验台</a>
+          <a class="btn btn-primary" href="#lab">进入实验台<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="btn btn-ghost" href="#principle">先看原理</a>
         </div>
-        <div class="chips" aria-label="关键常数">
-          <span class="chip"><b>h</b> 6.626×10⁻³⁴ J·s</span>
-          <span class="chip"><b>e</b> 1.602×10⁻¹⁹ C</span>
-          <span class="chip"><b>hc</b> 1240 eV·nm</span>
+        <div class="hud" aria-label="实时状态">
+          <div class="hud-item"><span>λ</span><strong id="hud-lambda">400 nm</strong></div>
+          <div class="hud-item"><span>E</span><strong id="hud-energy">3.10 eV</strong></div>
+          <div class="hud-item"><span>STATUS</span><strong id="hud-status" data-state="ok">有光电流</strong></div>
         </div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="art-lamp"></div>
-        <div class="art-beam"></div>
-        <div class="art-plate"></div>
-        <div class="art-electron e1"></div>
-        <div class="art-electron e2"></div>
-        <div class="art-electron e3"></div>
-        <p class="art-caption">光子 → 金属 → 光电子</p>
+
+      <div class="hero-visual" data-reveal>
+        <div class="orb">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="core"></span>
+          <span class="orbit o1"><i></i></span>
+          <span class="orbit o2"><i></i></span>
+          <span class="orbit o3"><i></i></span>
+          <span class="beam"></span>
+        </div>
+        <span class="visual-tag tag-a">PHOTON SOURCE</span>
+        <span class="visual-tag tag-b">e<sup>−</sup> EMISSION</span>
+        <span class="visual-tag tag-c">hν → E<sub>k</sub></span>
       </div>
     </section>
 
-    <section id="lab" class="lab">
+    <section id="lab" class="section lab">
       <div class="section-head">
+        <p class="section-kicker"><span>01</span>EXPERIMENT</p>
         <h2>实验台</h2>
         <p>四个控件对应四个物理量，读数区与曲线会同步变化。</p>
       </div>
 
-      <div class="lab-grid">
-        <aside class="panel controls" aria-label="实验参数">
-          <div class="control">
-            <label for="lambda">波长 <span class="unit">λ</span><output id="lambda-out" for="lambda">400 nm</output></label>
-            <input type="range" id="lambda" min="200" max="700" step="5" value="400">
-            <div class="scale"><span>200 nm 紫外</span><span>700 nm 红</span></div>
-          </div>
-
-          <div class="control">
-            <label for="metal">金属 <span class="unit">逸出功 W</span></label>
-            <select id="metal" aria-label="选择金属"></select>
-            <p class="hint" id="metal-hint">—</p>
-          </div>
-
-          <div class="control">
-            <label for="intensity">光强 <span class="unit">相对值</span><output id="intensity-out" for="intensity">100%</output></label>
-            <input type="range" id="intensity" min="0" max="100" step="1" value="100">
-            <p class="hint">光强只改变电子数目，不改变单电子能量。</p>
-          </div>
-
-          <div class="control">
-            <label for="bias">电压 <span class="unit">阳极相对阴极</span><output id="bias-out" for="bias">0.00 V</output></label>
-            <input type="range" id="bias" min="-3" max="3" step="0.05" value="0">
-            <div class="scale"><span>−3 V 反向</span><span>+3 V 正向</span></div>
-          </div>
-
-          <div class="presets" role="group" aria-label="预设场景">
-            <button type="button" class="btn btn-small" id="preset-red" aria-pressed="false">红光强光</button>
-            <button type="button" class="btn btn-small" id="preset-uv" aria-pressed="false">紫外弱光</button>
-            <button type="button" class="btn btn-small" id="preset-cutoff" aria-pressed="false">刚好截止</button>
-            <button type="button" class="btn btn-small" id="preset-reverse" aria-pressed="false">反向截止</button>
-          </div>
-        </aside>
-
-        <div class="panel stage">
-          <canvas id="lab-canvas" role="img" aria-label="光子从光源射向金属，逸出电子飞向阳极的示意图"></canvas>
-          <div class="stage-legend">
-            <span><i class="dot photon"></i>光子</span>
-            <span><i class="dot electron"></i>光电子</span>
-            <span><i class="dot plate"></i>金属（阴极）</span>
-          </div>
+      <div class="console" data-reveal>
+        <div class="console-bar">
+          <span class="console-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="console-title">PHOTOELECTRIC WORKBENCH <em>v1.0</em></span>
+          <span class="console-live"><i></i>LIVE MODEL</span>
         </div>
+        <div class="console-body">
+          <div class="lab-grid">
+            <aside class="panel controls" aria-label="实验参数">
+              <div class="control">
+                <div class="control-top">
+                  <span class="control-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                      <path d="M2 12c2.2 0 2.2-5.5 4.5-5.5S9 17.5 11.5 17.5 14 6.5 16.5 6.5 19 12 22 12"/>
+                    </svg>
+                  </span>
+                  <label for="lambda">波长 <em>λ</em></label>
+                  <output id="lambda-out" for="lambda">400 nm</output>
+                </div>
+                <input type="range" id="lambda" min="200" max="700" step="5" value="400">
+                <div class="scale"><span>200 nm 紫外</span><span>700 nm 红</span></div>
+              </div>
 
-        <aside class="panel readouts" aria-live="polite" aria-label="实时读数">
-          <div class="readout"><span>波长 λ</span><strong id="r-lambda">400 nm</strong></div>
-          <div class="readout"><span>频率 ν</span><strong id="r-nu">—</strong></div>
-          <div class="readout"><span>光子能量 E</span><strong id="r-energy">—</strong></div>
-          <div class="readout"><span>逸出功 W</span><strong id="r-work">—</strong></div>
-          <div class="readout"><span>最大初动能 E<sub>k</sub></span><strong id="r-kinetic">—</strong></div>
-          <div class="readout"><span>遏止电压 U<sub>0</sub></span><strong id="r-u0">—</strong></div>
-          <div class="readout readout-accent"><span>光电流 I</span><strong id="r-current">—</strong></div>
-          <div class="status" id="status">—</div>
-          <p class="status-detail" id="status-detail"></p>
-        </aside>
-      </div>
+              <div class="control">
+                <div class="control-top">
+                  <span class="control-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>
+                    </svg>
+                  </span>
+                  <label for="metal">金属 <em>W</em></label>
+                </div>
+                <div class="select-wrap">
+                  <select id="metal" aria-label="选择金属"></select>
+                  <svg class="select-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p class="hint" id="metal-hint">—</p>
+              </div>
 
-      <div class="panel chart-panel">
-        <div class="chart-head">
-          <h3>光电流–电压特性（I–U）</h3>
-          <p>虚线为遏止电压 −U<sub>0</sub>，圆点为当前工作点。</p>
-        </div>
-        <div class="chart-wrap">
-          <canvas id="iv-chart" role="img" aria-label="光电流随电压变化的关系曲线"></canvas>
+              <div class="control">
+                <div class="control-top">
+                  <span class="control-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                      <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/>
+                    </svg>
+                  </span>
+                  <label for="intensity">光强 <em>I₀</em></label>
+                  <output id="intensity-out" for="intensity">100%</output>
+                </div>
+                <input type="range" id="intensity" min="0" max="100" step="1" value="100">
+                <p class="hint">光强只改变电子数目，不改变单电子能量。</p>
+              </div>
+
+              <div class="control">
+                <div class="control-top">
+                  <span class="control-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/>
+                    </svg>
+                  </span>
+                  <label for="bias">电压 <em>U</em></label>
+                  <output id="bias-out" for="bias">0.00 V</output>
+                </div>
+                <input type="range" id="bias" min="-3" max="3" step="0.05" value="0">
+                <div class="scale"><span>−3 V 反向</span><span>+3 V 正向</span></div>
+              </div>
+
+              <div class="presets" role="group" aria-label="预设场景">
+                <button type="button" class="btn btn-preset" id="preset-red" aria-pressed="false"><span>红光强光</span><em>650 nm</em></button>
+                <button type="button" class="btn btn-preset" id="preset-uv" aria-pressed="false"><span>紫外弱光</span><em>250 nm</em></button>
+                <button type="button" class="btn btn-preset" id="preset-cutoff" aria-pressed="false"><span>刚好截止</span><em>−0.96 V</em></button>
+                <button type="button" class="btn btn-preset" id="preset-reverse" aria-pressed="false"><span>反向截止</span><em>−1.20 V</em></button>
+              </div>
+            </aside>
+
+            <div class="panel stage">
+              <canvas id="lab-canvas" role="img" aria-label="光子从光源射向金属，逸出电子飞向阳极的示意图"></canvas>
+              <span class="corner tl" aria-hidden="true"></span>
+              <span class="corner tr" aria-hidden="true"></span>
+              <span class="corner bl" aria-hidden="true"></span>
+              <span class="corner br" aria-hidden="true"></span>
+              <div class="stage-legend">
+                <span><i class="dot photon"></i>光子</span>
+                <span><i class="dot electron"></i>光电子</span>
+                <span><i class="dot plate"></i>金属（阴极）</span>
+              </div>
+            </div>
+
+            <aside class="panel readouts" aria-live="polite" aria-label="实时读数">
+              <div class="readout"><span>波长 λ</span><strong id="r-lambda">400 nm</strong></div>
+              <div class="readout"><span>频率 ν</span><strong id="r-nu">—</strong></div>
+              <div class="readout"><span>光子能量 E</span><strong id="r-energy">—</strong></div>
+              <div class="readout"><span>逸出功 W</span><strong id="r-work">—</strong></div>
+              <div class="readout"><span>最大初动能 E<sub>k</sub></span><strong id="r-kinetic">—</strong></div>
+              <div class="readout"><span>遏止电压 U<sub>0</sub></span><strong id="r-u0">—</strong></div>
+              <div class="readout readout-accent"><span>光电流 I</span><strong id="r-current">—</strong></div>
+              <div class="status" id="status" data-state="ok">—</div>
+              <p class="status-detail" id="status-detail"></p>
+              <p class="readout-foot">MODEL · hν − W = E<sub>k</sub> &nbsp;/&nbsp; eU<sub>0</sub> = E<sub>k</sub></p>
+            </aside>
+          </div>
+
+          <div class="panel chart-panel">
+            <div class="chart-head">
+              <div>
+                <p class="chart-kicker">I–U CHARACTERISTIC</p>
+                <h3>光电流–电压特性</h3>
+              </div>
+              <p class="chart-note">虚线为遏止电压 −U<sub>0</sub>，圆点为当前工作点。</p>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="iv-chart" role="img" aria-label="光电流随电压变化的关系曲线"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="data" class="data">
+    <section id="data" class="section data">
       <div class="section-head">
+        <p class="section-kicker"><span>02</span>DATA LOG</p>
         <h2>把你的测量记下来</h2>
         <p>记录当前参数与读数，导出 CSV 可直接粘进报告表格。</p>
       </div>
       <div class="data-actions">
-        <button type="button" class="btn btn-primary" id="record">记录当前参数</button>
-        <button type="button" class="btn btn-ghost" id="export">导出 CSV</button>
+        <button type="button" class="btn btn-primary" id="record">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          记录当前参数
+        </button>
+        <button type="button" class="btn btn-ghost" id="export">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M5 7l3 3 3-3M3 13h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          导出 CSV
+        </button>
         <span class="data-count" id="data-count">0 条记录</span>
       </div>
       <div class="table-wrap">
@@ -157,42 +237,52 @@
       </div>
     </section>
 
-    <section id="principle" class="principle">
+    <section id="principle" class="section principle">
       <div class="section-head">
+        <p class="section-kicker"><span>03</span>THEORY</p>
         <h2>为什么红光再强也不行</h2>
         <p>光子能量由频率决定；光强只决定“来多少个光子”。</p>
       </div>
 
-      <div class="takeaway">
-        <span class="takeaway-kicker">一句话记住</span>
+      <div class="takeaway" data-reveal>
+        <span class="takeaway-kicker">KEY IDEA</span>
         <p><strong>频率</strong>决定能不能打出电子、打出的电子多快；<strong>光强</strong>只决定打出多少个电子。</p>
       </div>
 
-      <div class="formula-grid">
+      <div class="formula-grid" data-reveal>
         <div class="formula-card">
+          <span class="card-index">01</span>
           <p class="formula-label">光子能量</p>
           <div class="formula" data-tex="E = h\nu = \dfrac{hc}{\lambda}">E = hν = hc/λ</div>
+          <p class="formula-note">λ 越短，单光子能量越大</p>
         </div>
         <div class="formula-card">
+          <span class="card-index">02</span>
           <p class="formula-label">最大初动能</p>
           <div class="formula" data-tex="E_k = h\nu - W">Ek = hν − W</div>
+          <p class="formula-note">只有 hν &gt; W 时才有电子逸出</p>
         </div>
         <div class="formula-card">
+          <span class="card-index">03</span>
           <p class="formula-label">遏止电压</p>
           <div class="formula" data-tex="eU_0 = E_k">eU0 = Ek</div>
+          <p class="formula-note">反向电压到 −U₀ 时电流归零</p>
         </div>
       </div>
 
-      <div class="misconceptions">
+      <div class="misconceptions" data-reveal>
         <article class="misconception">
+          <span class="m-index">01</span>
           <h3>“光更强，电子更快”</h3>
           <p>错。光强增加的是单位时间的光子数，饱和电流变大；单个光子的能量仍由频率决定，最大初动能不变。</p>
         </article>
         <article class="misconception">
+          <span class="m-index">02</span>
           <h3>“照久一点总能打出电子”</h3>
           <p>错。当 <span class="inline-formula" data-tex="h\nu < W">hν &lt; W</span> 时，一个光子给不了足够的能量，照多久都不会有电子逸出。</p>
         </article>
         <article class="misconception">
+          <span class="m-index">03</span>
           <h3>“遏止电压和光强有关”</h3>
           <p>错。遏止电压只由频率和金属的逸出功决定：<span class="inline-formula" data-tex="U_0 = (h\nu - W)/e">U0 = (hν − W)/e</span>。</p>
         </article>
@@ -206,9 +296,20 @@
   </main>
 
   <footer class="footer">
+    <div class="footer-brand">
+      <span class="brand-mark small" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z"/>
+          <circle cx="16" cy="16" r="3.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span>光电实验室 <em>PHOTOELECTRIC LAB</em></span>
+    </div>
     <p>常数：CODATA 2018；逸出功：CRC Handbook 常用值。</p>
-    <p>本页为课程作业演示，所有读数由本地物理模型计算，无后端、无数据上传。</p>
+    <p>本地物理模型计算 · 无后端 · 无数据上传</p>
   </footer>
+
+  <noscript><p class="noscript">本页的读数与曲线需要 JavaScript 计算，请启用后刷新。</p></noscript>
 
   <script src="vendor/katex/katex.min.js"></script>
   <script src="vendor/chart.umd.js"></script>
