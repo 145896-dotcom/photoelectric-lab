@@ -7,7 +7,7 @@
   <title>光电效应实验台 · 单屏工作台</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=8">
   <script>
     window.__errors = [];
     window.addEventListener('error', function (e) {
@@ -37,6 +37,7 @@
     <nav aria-label="页面导航">
       <a href="index.html">首页</a>
       <a href="lab.html" class="is-active">实验台</a>
+      <a href="quiz.html">自测</a>
       <a href="#tabs-panel" id="nav-theory">原理</a>
       <a class="nav-ext" href="https://github.com/145896-dotcom/photoelectric-lab" target="_blank" rel="noopener">源码<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
@@ -171,6 +172,7 @@
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M5 7l3 3 3-3M3 13h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 导出 CSV
               </button>
+              <button type="button" class="btn btn-ghost btn-sm" id="clear-records" title="清空本机保存的记录">清空</button>
               <span class="data-count" id="data-count">0 条记录</span>
             </div>
             <div class="table-wrap">
@@ -242,6 +244,6 @@
   <script src="vendor/chart.umd.js"></script>
   <script src="config.js"></script>
   <script src="physics.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

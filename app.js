@@ -11,6 +11,8 @@
 
   const $ = function (id) { return document.getElementById(id); };
   const MAX_I = cfg.maxCurrentUa;
+  const RECORDS_KEY = 'pe.records.v1';
+  const MAX_RECORDS = 100;
 
   const state = {
     lambda: cfg.ranges.lambda.default,
@@ -97,6 +99,7 @@
     try {
       buildMetalOptions();
       bindControls();
+      state.records = loadRecords();
       initCanvas();
       initMicro();
       initChart();
@@ -214,6 +217,8 @@
 
     $('record').addEventListener('click', recordRow);
     $('export').addEventListener('click', exportCsv);
+    const clearBtn = $('clear-records');
+    if (clearBtn) clearBtn.addEventListener('click', clearRecords);
   }
 
   function clearPresetActive() {
@@ -1044,6 +1049,45 @@
 
   /* ---------- 记录与导出 ---------- */
 
+  function loadRecords() {
+    try {
+      const raw = window.localStorage.getItem(RECORDS_KEY);
+      if (!raw) return [];
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return [];
+      return arr.filter(function (r) {
+        return r && typeof r.metal === 'string' &&
+          Number.isFinite(Number(r.lambda)) && Number.isFinite(Number(r.intensity)) &&
+          Number.isFinite(Number(r.bias)) && Number.isFinite(Number(r.energy)) &&
+          Number.isFinite(Number(r.kinetic)) && Number.isFinite(Number(r.current));
+      }).slice(-MAX_RECORDS).map(function (r) {
+        return {
+          metal: r.metal,
+          lambda: Number(r.lambda),
+          intensity: Number(r.intensity),
+          bias: Number(r.bias),
+          energy: Number(r.energy),
+          kinetic: Number(r.kinetic),
+          current: Number(r.current)
+        };
+      });
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function saveRecords() {
+    try {
+      window.localStorage.setItem(RECORDS_KEY, JSON.stringify(state.records.slice(-MAX_RECORDS)));
+    } catch (err) { /* file:// 或隐私模式下不可用 */ }
+  }
+
+  function clearRecords() {
+    state.records = [];
+    saveRecords();
+    renderTable();
+  }
+
   function recordRow() {
     const c = current || model();
     state.records.push({
@@ -1055,6 +1099,8 @@
       kinetic: c.ek,
       current: c.i
     });
+    if (state.records.length > MAX_RECORDS) state.records = state.records.slice(-MAX_RECORDS);
+    saveRecords();
     renderTable();
   }
 

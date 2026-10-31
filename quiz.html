@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="光电效应自测：6 道题覆盖阈值、光强、遏止电压与一个计算。">
+  <title>光电效应自测 · 光电实验室</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css?v=8">
+  <script>
+    window.__errors = [];
+    window.addEventListener('error', function (e) {
+      window.__errors.push(String((e && (e.message || e.error)) || 'unknown error'));
+    });
+  </script>
+</head>
+<body class="quiz-page">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-a" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-b" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="返回首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z"/>
+          <circle cx="16" cy="16" r="3.2" fill="currentColor" stroke="none"/>
+          <path d="M16 6.5v4M16 21.5v4M6.8 11l3.4 2M21.8 19l3.4 2M6.8 21l3.4-2M21.8 13l3.4-2" stroke-linecap="round" opacity=".55"/>
+        </svg>
+      </span>
+      <span class="brand-text">光电实验室<small>PHOTOELECTRIC LAB</small></span>
+    </a>
+    <nav aria-label="页面导航">
+      <a href="index.html">首页</a>
+      <a href="lab.html">实验台</a>
+      <a href="quiz.html" class="is-active">自测</a>
+      <a class="nav-ext" href="https://github.com/145896-dotcom/photoelectric-lab" target="_blank" rel="noopener">源码<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+  </header>
+
+  <main class="quiz-shell">
+    <header class="quiz-head">
+      <div>
+        <p class="section-kicker"><span>02</span>SELF CHECK · PHOTOELECTRIC EFFECT</p>
+        <h1>你真的理解<br><span class="grad">光电效应吗？</span></h1>
+        <p class="quiz-lead">6 道题，覆盖阈值、光强、遏止电压与一个计算。选完立刻看解析。</p>
+      </div>
+      <div class="quiz-best">
+        <span>BEST</span>
+        <strong id="quiz-best">—</strong>
+        <em>本机最佳</em>
+      </div>
+    </header>
+
+    <div class="quiz-grid">
+      <section class="panel quiz-card" aria-live="polite">
+        <div id="quiz-question">
+          <div class="quiz-meta">
+            <span id="quiz-counter">QUESTION 01 / 06</span>
+            <span class="quiz-tag" id="quiz-tag">阈值</span>
+          </div>
+          <div class="quiz-progress" aria-hidden="true"><i id="quiz-progress"></i></div>
+          <h2 id="quiz-text">加载中…</h2>
+          <div class="quiz-options" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback" hidden></div>
+          <div class="quiz-actions">
+            <span class="quiz-hint" id="quiz-hint">选择一项后查看解析</span>
+            <button type="button" class="btn btn-primary btn-sm" id="quiz-next" disabled>下一题</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" id="quiz-result" hidden>
+          <p class="result-kicker">RESULT</p>
+          <strong class="result-score" id="result-score">0 / 6</strong>
+          <p class="result-msg" id="result-msg"></p>
+          <div class="result-actions">
+            <button type="button" class="btn btn-primary" id="quiz-retry">再测一次</button>
+            <a class="btn btn-ghost" href="lab.html">回实验台验证</a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="quiz-side">
+        <div class="panel side-card">
+          <span class="side-kicker">FORMULA</span>
+          <h3>公式速查</h3>
+          <div class="formula-line">E = hν = hc / λ</div>
+          <div class="formula-line">E<sub>k</sub> = hν − W</div>
+          <div class="formula-line">eU<sub>0</sub> = E<sub>k</sub></div>
+          <p class="side-note">W 是金属逸出功；只有 hν &gt; W 才有光电子。</p>
+        </div>
+
+        <div class="panel side-card">
+          <span class="side-kicker">TRAPS</span>
+          <h3>三个高频误区</h3>
+          <ul class="side-list">
+            <li>光强越大，电子动能越大。</li>
+            <li>红光多照一会儿就会发射。</li>
+            <li>遏止电压与光强有关。</li>
+          </ul>
+        </div>
+
+        <a class="side-link" href="lab.html">
+          <span>去实验台亲手验证</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <script src="quiz.js?v=8"></script>
+</body>
+</html>
