@@ -147,6 +147,7 @@
         <p class="readout-foot">MODEL · hν − W = E<sub>k</sub> &nbsp;/&nbsp; eU<sub>0</sub> = E<sub>k</sub></p>
       </aside>
 
+      <div class="bottom-band">
       <section class="panel tabs-panel" id="tabs-panel" aria-label="曲线、数据与原理">
         <div class="tabs-head">
           <div class="tabs" role="tablist" aria-label="实验台面板">
@@ -223,9 +224,17 @@
           <div class="micro-title"><span class="micro-kicker">MICRO WORLD</span><h2>微观世界</h2></div>
           <span class="micro-live"><i></i>实时</span>
         </div>
-        <canvas id="micro-canvas" role="img" aria-label="光子撞击金属晶格并逸出电子的微观示意"></canvas>
+        <div class="micro-body">
+          <canvas id="micro-canvas" role="img" aria-label="光子撞击金属晶格并逸出电子的微观示意"></canvas>
+          <div class="energy-level">
+            <span class="energy-label">ENERGY / eV</span>
+            <canvas id="energy-canvas" role="img" aria-label="逸出功与光子能量的能级示意"></canvas>
+            <span class="energy-note" id="energy-note">—</span>
+          </div>
+        </div>
         <p class="micro-note" id="micro-note">—</p>
       </section>
+      </div>
     </div>
   </main>
 

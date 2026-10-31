@@ -897,15 +897,16 @@ tbody td:first-child { color: var(--muted); font-family: var(--mono); }
   min-height: 0;
   display: grid;
   grid-template-columns: 262px minmax(0, 1fr) 258px;
-  grid-template-rows: minmax(0, 1fr) clamp(190px, 24vh, 228px);
+  grid-template-rows: minmax(0, 1fr) clamp(210px, 26vh, 252px);
   gap: 10px;
   align-items: stretch;
 }
 .lab-page .controls { grid-column: 1; grid-row: 1 / span 2; padding: 12px; gap: 14px; justify-content: center; overflow: auto; }
 .lab-page .stage { grid-column: 2; grid-row: 1; min-height: 0; height: 100%; }
 .lab-page .readouts { grid-column: 3; grid-row: 1; padding: 10px 12px; overflow: auto; }
-.lab-page .tabs-panel { grid-column: 2; grid-row: 2; }
-.lab-page .micro-panel { grid-column: 3; grid-row: 2; }
+.lab-page .bottom-band { grid-column: 2 / 4; grid-row: 2; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 10px; min-height: 0; }
+.lab-page .tabs-panel { grid-column: auto; grid-row: auto; }
+.lab-page .micro-panel { grid-column: auto; grid-row: auto; }
 
 /* compact controls */
 .lab-page .control { gap: 5px; }
@@ -995,7 +996,15 @@ tbody td:first-child { color: var(--muted); font-family: var(--mono); }
 .micro-kicker { font-family: var(--mono); font-size: 7px; letter-spacing: 0.16em; color: var(--cyan); }
 .micro-live { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 8px; color: var(--green); }
 .micro-live i { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2.2s ease-in-out infinite; }
-#micro-canvas { flex: 1 1 auto; min-height: 0; width: 100%; display: block; }
+.micro-body { flex: 1 1 auto; min-height: 0; display: flex; gap: 8px; }
+#micro-canvas { flex: 1.55; min-width: 0; min-height: 0; width: 100%; display: block; }
+.energy-level { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-left: 8px; border-left: 1px dashed var(--line); }
+.energy-label { font-family: var(--mono); font-size: 7px; letter-spacing: 0.12em; color: var(--cyan); }
+#energy-canvas { flex: 1 1 auto; min-height: 0; width: 100%; display: block; }
+.energy-note { font-family: var(--mono); font-size: 7px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.energy-note[data-state="ok"] { color: var(--green); }
+.energy-note[data-state="none"] { color: var(--danger); }
+.energy-note[data-state="critical"] { color: var(--amber); }
 .micro-note { flex: 0 0 auto; font-family: var(--mono); font-size: 8px; line-height: 1.4; color: var(--muted); white-space: normal; min-height: 11px; }
 .micro-note[data-state="ok"] { color: var(--green); }
 .micro-note[data-state="none"] { color: var(--danger); }
@@ -1008,15 +1017,16 @@ tbody td:first-child { color: var(--muted); font-family: var(--mono); }
   .lab-head { align-items: flex-start; flex-direction: column; gap: 8px; }
   .lab-head-right { width: 100%; justify-content: space-between; }
   .lab-page .lab-grid { display: flex; flex-direction: column; }
-  .lab-page .controls, .lab-page .stage, .lab-page .readouts, .lab-page .tabs-panel, .lab-page .micro-panel {
+  .lab-page .controls, .lab-page .stage, .lab-page .readouts, .lab-page .bottom-band, .lab-page .tabs-panel, .lab-page .micro-panel {
     grid-column: auto; grid-row: auto;
   }
   .lab-page .stage { height: 380px; }
   .lab-page .readouts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
   .lab-page .readout-accent { grid-column: 1 / -1; }
   .lab-page .status, .lab-page .status-detail { grid-column: 1 / -1; }
+  .lab-page .bottom-band { display: flex; flex-direction: column; gap: 10px; }
   .lab-page .tabs-panel { height: 330px; }
-  .lab-page .micro-panel { height: 250px; }
+  .lab-page .micro-panel { height: 300px; }
   .lab-page .controls { overflow: visible; }
 }
 
@@ -1026,7 +1036,7 @@ tbody td:first-child { color: var(--muted); font-family: var(--mono); }
   .lab-shell { padding: 8px 12px 12px; }
   .lab-page .stage { height: 340px; }
   .lab-page .tabs-panel { height: 340px; }
-  .lab-page .micro-panel { height: 240px; }
+  .lab-page .micro-panel { height: 300px; }
   .landing .hero { min-height: calc(100dvh - 120px); }
   .landing-footer { flex-direction: column; gap: 4px; }
   .theory-list { display: none; }

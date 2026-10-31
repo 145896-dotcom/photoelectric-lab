@@ -39,6 +39,10 @@
   let microW = 0;
   let microH = 0;
   let microDpr = 1;
+  let energyCanvas = null;
+  let energyCtx = null;
+  let energyW = 0;
+  let energyH = 0;
   const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   function metal() {
@@ -276,6 +280,7 @@
     updateChart(c);
     drawStage(c);
     drawMicro(c);
+    drawEnergy(c);
   }
 
   function updateStatus(c) {
@@ -336,6 +341,13 @@
       } else {
         microNote.textContent = 'hν ' + fmt(c.E, 2) + ' eV > W ' + fmt(c.m.workEv, 2) + ' eV · 电子带走 ' + fmt(c.ek, 2) + ' eV';
       }
+    }
+    const energyNote = $('energy-note');
+    if (energyNote) {
+      energyNote.setAttribute('data-state', kind);
+      if (state.intensity === 0) energyNote.textContent = '无光子';
+      else if (!c.emitting) energyNote.textContent = 'hν < W · 被束缚';
+      else energyNote.textContent = 'Ek = ' + fmt(c.ek, 2) + ' eV';
     }
     detail.textContent = note;
   }
@@ -491,6 +503,8 @@
     microCanvas = $('micro-canvas');
     if (!microCanvas) return;
     microCtx = microCanvas.getContext('2d');
+    energyCanvas = $('energy-canvas');
+    if (energyCanvas) energyCtx = energyCanvas.getContext('2d');
     resizeMicro();
     if (window.ResizeObserver) {
       new ResizeObserver(resizeMicro).observe(microCanvas.parentElement);
@@ -511,7 +525,19 @@
     microCanvas.width = Math.round(microW * microDpr);
     microCanvas.height = Math.round(microH * microDpr);
     microCtx.setTransform(microDpr, 0, 0, microDpr, 0, 0);
-    if (current) drawMicro(current);
+    if (energyCanvas) {
+      energyW = energyCanvas.clientWidth;
+      energyH = energyCanvas.clientHeight;
+      if (energyW && energyH) {
+        energyCanvas.width = Math.round(energyW * microDpr);
+        energyCanvas.height = Math.round(energyH * microDpr);
+        energyCtx.setTransform(microDpr, 0, 0, microDpr, 0, 0);
+      }
+    }
+    if (current) {
+      drawMicro(current);
+      drawEnergy(current);
+    }
   }
 
   function drawMicro(c) {
@@ -629,6 +655,128 @@
     microCtx.fillStyle = 'rgba(111, 135, 156, 0.8)';
     microCtx.textAlign = 'left';
     microCtx.fillText('金属晶格', 6, h - 5);
+  }
+
+  function drawEnergy(c) {
+    if (!energyCtx || !energyW || !energyH || !c) return;
+    const w = energyW;
+    const h = energyH;
+    const padL = 18;
+    const padR = 5;
+    const padT = 7;
+    const padB = 9;
+    const maxE = 6.4;
+    const x0 = padL;
+    const x1 = w - padR;
+    const y = function (e) {
+      const v = Math.max(0, Math.min(maxE, e));
+      return padT + (maxE - v) / maxE * (h - padT - padB);
+    };
+    const W = c.m.workEv;
+    const E = c.E;
+
+    energyCtx.clearRect(0, 0, w, h);
+
+    // 坐标轴与刻度
+    energyCtx.strokeStyle = 'rgba(104, 190, 220, 0.25)';
+    energyCtx.lineWidth = 0.8;
+    energyCtx.beginPath();
+    energyCtx.moveTo(x0, y(0));
+    energyCtx.lineTo(x0, y(maxE));
+    energyCtx.stroke();
+    energyCtx.font = '6.5px "Cascadia Code", Consolas, monospace';
+    energyCtx.fillStyle = 'rgba(111, 135, 156, 0.85)';
+    energyCtx.textAlign = 'right';
+    const ticks = [0, 2, 4, 6];
+    for (let k = 0; k < ticks.length; k++) {
+      const ty = y(ticks[k]);
+      energyCtx.beginPath();
+      energyCtx.moveTo(x0 - 2, ty);
+      energyCtx.lineTo(x0, ty);
+      energyCtx.stroke();
+      energyCtx.fillText(String(ticks[k]), x0 - 3, ty + 2);
+    }
+    energyCtx.textAlign = 'left';
+    energyCtx.fillText('eV', 1, 7);
+
+    // 金属价带：0 ~ W
+    energyCtx.fillStyle = 'rgba(63, 216, 232, 0.055)';
+    energyCtx.fillRect(x0, y(W), x1 - x0, y(0) - y(W));
+
+    // E > W 时，W 与 E 之间的可动能量
+    if (E > W) {
+      energyCtx.fillStyle = 'rgba(63, 216, 232, 0.12)';
+      energyCtx.fillRect(x0, y(E), x1 - x0, y(W) - y(E));
+    }
+
+    // W 线
+    energyCtx.setLineDash([3, 2]);
+    energyCtx.strokeStyle = 'rgba(245, 165, 36, 0.75)';
+    energyCtx.beginPath();
+    energyCtx.moveTo(x0, y(W));
+    energyCtx.lineTo(x1, y(W));
+    energyCtx.stroke();
+    energyCtx.setLineDash([]);
+    energyCtx.fillStyle = 'rgba(245, 165, 36, 0.9)';
+    energyCtx.textAlign = 'left';
+    energyCtx.fillText('W ' + W.toFixed(2), x0 + 2, y(W) - 3);
+
+    // 光子能量线
+    const col = wavelengthColor(state.lambda);
+    const rgb = col.r + ',' + col.g + ',' + col.b;
+    energyCtx.strokeStyle = 'rgba(' + rgb + ', 0.95)';
+    energyCtx.lineWidth = 1.1;
+    energyCtx.beginPath();
+    energyCtx.moveTo(x0, y(E));
+    energyCtx.lineTo(x1, y(E));
+    energyCtx.stroke();
+    energyCtx.fillStyle = 'rgba(' + rgb + ', 1)';
+    energyCtx.textAlign = 'right';
+    energyCtx.fillText('hν ' + E.toFixed(2), x1, y(E) - 3);
+
+    // 入射光子箭头
+    if (E < maxE - 0.2) {
+      energyCtx.strokeStyle = 'rgba(' + rgb + ', 0.8)';
+      energyCtx.lineWidth = 0.9;
+      energyCtx.beginPath();
+      energyCtx.moveTo(x0 + 7, y(E + 0.65));
+      energyCtx.lineTo(x0 + 7, y(E) - 2);
+      energyCtx.stroke();
+      energyCtx.beginPath();
+      energyCtx.moveTo(x0 + 5, y(E) - 3);
+      energyCtx.lineTo(x0 + 7, y(E) - 1);
+      energyCtx.lineTo(x0 + 9, y(E) - 3);
+      energyCtx.stroke();
+    }
+
+    if (E > W && y(W) - y(E) > 5) {
+      // E_k 括号
+      const bx = x1 - 7;
+      energyCtx.strokeStyle = 'rgba(63, 216, 232, 0.9)';
+      energyCtx.lineWidth = 0.9;
+      energyCtx.beginPath();
+      energyCtx.moveTo(bx, y(E));
+      energyCtx.lineTo(bx, y(W));
+      energyCtx.moveTo(bx - 2.5, y(E));
+      energyCtx.lineTo(bx + 2.5, y(E));
+      energyCtx.moveTo(bx - 2.5, y(W));
+      energyCtx.lineTo(bx + 2.5, y(W));
+      energyCtx.stroke();
+      energyCtx.fillStyle = 'rgba(63, 216, 232, 0.95)';
+      energyCtx.textAlign = 'left';
+      energyCtx.fillText('Ek ' + (E - W).toFixed(2), x0 + 2, (y(E) + y(W)) / 2 + 2);
+    } else if (E <= W) {
+      // 无逸出：红叉
+      const cy = y(E);
+      energyCtx.strokeStyle = 'rgba(255, 107, 107, 0.9)';
+      energyCtx.lineWidth = 1.1;
+      energyCtx.beginPath();
+      energyCtx.moveTo(x1 - 10, cy - 3);
+      energyCtx.lineTo(x1 - 4, cy + 3);
+      energyCtx.moveTo(x1 - 4, cy - 3);
+      energyCtx.lineTo(x1 - 10, cy + 3);
+      energyCtx.stroke();
+    }
   }
 
   function wavelengthColor(nm) {
