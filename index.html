@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="光电效应交互实验台：调节波长、金属、光强与电压，观察光电流、遏止电压与 I–U 曲线的变化。">
+  <title>光电效应实验台 · 一束光能打出电子吗</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    window.__errors = [];
+    window.addEventListener('error', function (e) {
+      window.__errors.push(String((e && (e.message || e.error)) || 'unknown error'));
+    });
+    window.addEventListener('unhandledrejection', function (e) {
+      window.__errors.push('unhandledrejection: ' + String(e && e.reason));
+    });
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-dot" aria-hidden="true"></span>光电实验室</a>
+    <nav aria-label="页面导航">
+      <a href="#lab">实验台</a>
+      <a href="#data">数据</a>
+      <a href="#principle">原理</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">PHOTOELECTRIC EFFECT · 光电效应</p>
+        <h1>一束光，<br>能打出电子吗？</h1>
+        <p class="lead">调节波长、金属、光强与电压，观察光电流如何响应——并找出“红光再强也打不出电子”的原因。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#lab">进入实验台</a>
+          <a class="btn btn-ghost" href="#principle">先看原理</a>
+        </div>
+        <div class="chips" aria-label="关键常数">
+          <span class="chip"><b>h</b> 6.626×10⁻³⁴ J·s</span>
+          <span class="chip"><b>e</b> 1.602×10⁻¹⁹ C</span>
+          <span class="chip"><b>hc</b> 1240 eV·nm</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-lamp"></div>
+        <div class="art-beam"></div>
+        <div class="art-plate"></div>
+        <div class="art-electron e1"></div>
+        <div class="art-electron e2"></div>
+        <div class="art-electron e3"></div>
+        <p class="art-caption">光子 → 金属 → 光电子</p>
+      </div>
+    </section>
+
+    <section id="lab" class="lab">
+      <div class="section-head">
+        <h2>实验台</h2>
+        <p>四个控件对应四个物理量，读数区与曲线会同步变化。</p>
+      </div>
+
+      <div class="lab-grid">
+        <aside class="panel controls" aria-label="实验参数">
+          <div class="control">
+            <label for="lambda">波长 <span class="unit">λ</span><output id="lambda-out" for="lambda">400 nm</output></label>
+            <input type="range" id="lambda" min="200" max="700" step="5" value="400">
+            <div class="scale"><span>200 nm 紫外</span><span>700 nm 红</span></div>
+          </div>
+
+          <div class="control">
+            <label for="metal">金属 <span class="unit">逸出功 W</span></label>
+            <select id="metal" aria-label="选择金属"></select>
+            <p class="hint" id="metal-hint">—</p>
+          </div>
+
+          <div class="control">
+            <label for="intensity">光强 <span class="unit">相对值</span><output id="intensity-out" for="intensity">100%</output></label>
+            <input type="range" id="intensity" min="0" max="100" step="1" value="100">
+            <p class="hint">光强只改变电子数目，不改变单电子能量。</p>
+          </div>
+
+          <div class="control">
+            <label for="bias">电压 <span class="unit">阳极相对阴极</span><output id="bias-out" for="bias">0.00 V</output></label>
+            <input type="range" id="bias" min="-3" max="3" step="0.05" value="0">
+            <div class="scale"><span>−3 V 反向</span><span>+3 V 正向</span></div>
+          </div>
+
+          <div class="presets" role="group" aria-label="预设场景">
+            <button type="button" class="btn btn-small" id="preset-red" aria-pressed="false">红光强光</button>
+            <button type="button" class="btn btn-small" id="preset-uv" aria-pressed="false">紫外弱光</button>
+            <button type="button" class="btn btn-small" id="preset-cutoff" aria-pressed="false">刚好截止</button>
+            <button type="button" class="btn btn-small" id="preset-reverse" aria-pressed="false">反向截止</button>
+          </div>
+        </aside>
+
+        <div class="panel stage">
+          <canvas id="lab-canvas" role="img" aria-label="光子从光源射向金属，逸出电子飞向阳极的示意图"></canvas>
+          <div class="stage-legend">
+            <span><i class="dot photon"></i>光子</span>
+            <span><i class="dot electron"></i>光电子</span>
+            <span><i class="dot plate"></i>金属（阴极）</span>
+          </div>
+        </div>
+
+        <aside class="panel readouts" aria-live="polite" aria-label="实时读数">
+          <div class="readout"><span>波长 λ</span><strong id="r-lambda">400 nm</strong></div>
+          <div class="readout"><span>频率 ν</span><strong id="r-nu">—</strong></div>
+          <div class="readout"><span>光子能量 E</span><strong id="r-energy">—</strong></div>
+          <div class="readout"><span>逸出功 W</span><strong id="r-work">—</strong></div>
+          <div class="readout"><span>最大初动能 E<sub>k</sub></span><strong id="r-kinetic">—</strong></div>
+          <div class="readout"><span>遏止电压 U<sub>0</sub></span><strong id="r-u0">—</strong></div>
+          <div class="readout readout-accent"><span>光电流 I</span><strong id="r-current">—</strong></div>
+          <div class="status" id="status">—</div>
+          <p class="status-detail" id="status-detail"></p>
+        </aside>
+      </div>
+
+      <div class="panel chart-panel">
+        <div class="chart-head">
+          <h3>光电流–电压特性（I–U）</h3>
+          <p>虚线为遏止电压 −U<sub>0</sub>，圆点为当前工作点。</p>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="iv-chart" role="img" aria-label="光电流随电压变化的关系曲线"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="data">
+      <div class="section-head">
+        <h2>把你的测量记下来</h2>
+        <p>记录当前参数与读数，导出 CSV 可直接粘进报告表格。</p>
+      </div>
+      <div class="data-actions">
+        <button type="button" class="btn btn-primary" id="record">记录当前参数</button>
+        <button type="button" class="btn btn-ghost" id="export">导出 CSV</button>
+        <span class="data-count" id="data-count">0 条记录</span>
+      </div>
+      <div class="table-wrap">
+        <table id="data-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">金属</th>
+              <th scope="col">λ / nm</th>
+              <th scope="col">光强 / %</th>
+              <th scope="col">U / V</th>
+              <th scope="col">E / eV</th>
+              <th scope="col">E<sub>k</sub> / eV</th>
+              <th scope="col">I / μA</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="principle" class="principle">
+      <div class="section-head">
+        <h2>为什么红光再强也不行</h2>
+        <p>光子能量由频率决定；光强只决定“来多少个光子”。</p>
+      </div>
+
+      <div class="takeaway">
+        <span class="takeaway-kicker">一句话记住</span>
+        <p><strong>频率</strong>决定能不能打出电子、打出的电子多快；<strong>光强</strong>只决定打出多少个电子。</p>
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-card">
+          <p class="formula-label">光子能量</p>
+          <div class="formula" data-tex="E = h\nu = \dfrac{hc}{\lambda}">E = hν = hc/λ</div>
+        </div>
+        <div class="formula-card">
+          <p class="formula-label">最大初动能</p>
+          <div class="formula" data-tex="E_k = h\nu - W">Ek = hν − W</div>
+        </div>
+        <div class="formula-card">
+          <p class="formula-label">遏止电压</p>
+          <div class="formula" data-tex="eU_0 = E_k">eU0 = Ek</div>
+        </div>
+      </div>
+
+      <div class="misconceptions">
+        <article class="misconception">
+          <h3>“光更强，电子更快”</h3>
+          <p>错。光强增加的是单位时间的光子数，饱和电流变大；单个光子的能量仍由频率决定，最大初动能不变。</p>
+        </article>
+        <article class="misconception">
+          <h3>“照久一点总能打出电子”</h3>
+          <p>错。当 <span class="inline-formula" data-tex="h\nu < W">hν &lt; W</span> 时，一个光子给不了足够的能量，照多久都不会有电子逸出。</p>
+        </article>
+        <article class="misconception">
+          <h3>“遏止电压和光强有关”</h3>
+          <p>错。遏止电压只由频率和金属的逸出功决定：<span class="inline-formula" data-tex="U_0 = (h\nu - W)/e">U0 = (hν − W)/e</span>。</p>
+        </article>
+      </div>
+
+      <div class="model-note">
+        <h3>模型说明</h3>
+        <p>本页 I–U 曲线采用教学简化：反向电压下电流线性衰减至零，正向电压下取饱和平台。真实曲线在拐点附近更圆滑，饱和段也会轻微上翘；这不影响 U<sub>0</sub> 与 I<sub>sat</sub> 的读数。逸出功取 CRC 常用值，不同晶面约有 ±0.1 eV 差异。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>常数：CODATA 2018；逸出功：CRC Handbook 常用值。</p>
+    <p>本页为课程作业演示，所有读数由本地物理模型计算，无后端、无数据上传。</p>
+  </footer>
+
+  <script src="vendor/katex/katex.min.js"></script>
+  <script src="vendor/chart.umd.js"></script>
+  <script src="config.js"></script>
+  <script src="physics.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
