@@ -23,7 +23,9 @@
 
 ## 技术
 
-React 19 + Vite 7 + TypeScript，构建为单个 HTML 文件，可直接双击离线打开。Office 文档用浏览器原生解压读取（零依赖），PDF 用 pdfjs-dist。
+React 19 + Vite 7 + TypeScript。入口是单个 HTML（约 290 KB），**Word / PPT / Excel / 纯文本在离线双击版里都能用**。
+
+**PDF 是例外**：解析器（pdf.js，约 1.7 MB）按需加载，所以需要联网、且需要同目录下的 `assets/`。离线双击时选 PDF 会给出明确提示，其余格式不受影响。
 
 ---
 
