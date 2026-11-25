@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI 拷问官</title>
+    <meta name="description" content="AI 拷问官：只问不答的对抗式质检工具。贴入复习提纲、讲稿或作品说明，按事实、依据、前提三层追问，最后给出卡点报告。离线可用，材料只留在本机。" />
+    <meta name="theme-color" content="#0B0B0B" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI 拷问官 — 只问不答的对抗式质检" />
+    <meta property="og:description" content="贴入材料，被按事实、依据、前提三层追问，最后拿到一张卡点报告。离线题库版不联网。" />
+    <meta property="og:url" content="https://145896-dotcom.github.io/photoelectric-lab/ai-interrogator/" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230B0B0B'/%3E%3Crect x='10' y='10' width='8' height='8' fill='%23C8452F'/%3E%3Ctext x='34' y='46' font-size='38' fill='%23EDEAE3' font-family='Georgia,serif' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E" />
+
     <script type="module">
 var Vs={exports:{}},ma={};var H0;function gg(){if(H0)return ma;H0=1;var c=Symbol.for("react.transitional.element"),s=Symbol.for("react.fragment");function d(o,T,O){var M=null;if(O!==void 0&&(M=""+O),T.key!==void 0&&(M=""+T.key),"key"in T){O={};for(var R in T)R!=="key"&&(O[R]=T[R])}else O=T;return T=O.ref,{$$typeof:c,type:o,key:M,ref:T!==void 0?T:null,props:O}}return ma.Fragment=s,ma.jsx=d,ma.jsxs=d,ma}var B0;function Sg(){return B0||(B0=1,Vs.exports=gg()),Vs.exports}var N=Sg(),Zs={exports:{}},W={};var Y0;function bg(){if(Y0)return W;Y0=1;var c=Symbol.for("react.transitional.element"),s=Symbol.for("react.portal"),d=Symbol.for("react.fragment"),o=Symbol.for("react.strict_mode"),T=Symbol.for("react.profiler"),O=Symbol.for("react.consumer"),M=Symbol.for("react.context"),R=Symbol.for("react.forward_ref"),x=Symbol.for("react.suspense"),q=Symbol.for("react.memo"),p=Symbol.for("react.lazy"),S=Symbol.for("react.activity"),C=Symbol.for("react.view_transition"),U=Symbol.iterator;function B(v){return v===null||typeof v!="object"?null:(v=U&&v[U]||v["@@iterator"],typeof v=="function"?v:null)}var I={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},P=Object.assign,Rt={};function Q(v,D,V){this.props=v,this.context=D,this.refs=Rt,this.updater=V||I}Q.prototype.isReactComponent={},Q.prototype.setState=function(v,D){if(typeof v!="object"&&typeof v!="function"&&v!=null)throw Error("takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,v,D,"setState")},Q.prototype.forceUpdate=function(v){this.updater.enqueueForceUpdate(this,v,"forceUpdate")};function gt(){}gt.prototype=Q.prototype;function st(v,D,V){this.props=v,this.context=D,this.refs=Rt,this.updater=V||I}var qt=st.prototype=new gt;qt.constructor=st,P(qt,Q.prototype),qt.isPureReactComponent=!0;var Lt=Array.isArray;function lt(){}var it={H:null,A:null,T:null,S:null},al=Object.prototype.hasOwnProperty;function Gt(v,D,V){var X=V.ref;return{$$typeof:c,type:v,key:D,ref:X!==void 0?X:null,props:V}}function $t(v,D){return Gt(v.type,D,v.props)}function Xt(v){return typeof v=="object"&&v!==null&&v.$$typeof===c}function Yl(v){var D={"=":"=0",":":"=2"};return"$"+v.replace(/[=:]/g,function(V){return D[V]})}var ce=/\/+/g;function zt(v,D){return typeof v=="object"&&v!==null&&v.key!=null?Yl(""+v.key):D.toString(36)}function H(v){switch(v.status){case"fulfilled":return v.value;case"rejected":throw v.reason;default:switch(typeof v.status=="string"?v.then(lt,lt):(v.status="pending",v.then(function(D){v.status==="pending"&&(v.status="fulfilled",v.value=D)},function(D){v.status==="pending"&&(v.status="rejected",v.reason=D)})),v.status){case"fulfilled":return v.value;case"rejected":throw v.reason}}throw v}function $(v,D,V,X,G){var tt=typeof v;(tt==="undefined"||tt==="boolean")&&(v=null);var et=!1;if(v===null)et=!0;else switch(tt){case"bigint":case"string":case"number":et=!0;break;case"object":switch(v.$$typeof){case c:case s:et=!0;break;case p:return et=v._init,$(et(v._payload),D,V,X,G)}}if(et)return G=G(v),et=X===""?"."+zt(v,0):X,Lt(G)?(V="",et!=null&&(V=et.replace(ce,"$&/")+"/"),$(G,D,V,"",function(Qt){return Qt})):G!=null&&(Xt(G)&&(G=$t(G,V+(G.key==null||v&&v.key===G.key?"":(""+G.key).replace(ce,"$&/")+"/")+et)),D.push(G)),1;et=0;var w=X===""?".":X+":";if(Lt(v))for(var J=0;J<v.length;J++)X=v[J],tt=w+zt(X,J),et+=$(X,D,V,tt,G);else if(J=B(v),typeof J=="function")for(v=J.call(v),J=0;!(X=v.next()).done;)X=X.value,tt=w+zt(X,J++),et+=$(X,D,V,tt,G);else if(tt==="object"){if(typeof v.then=="function")return $(H(v),D,V,X,G);throw D=String(v),Error("Objects are not valid as a React child (found: "+(D==="[object Object]"?"object with keys {"+Object.keys(v).join(", ")+"}":D)+"). If you meant to render a collection of children, use an array instead.")}return et}function K(v,D,V){if(v==null)return v;var X=[],G=0;return $(v,X,"","",function(tt){return D.call(V,tt,G++)}),X}function St(v){if(v._status===-1){var D=v._result,V=D();V.then(function(X){(v._status===0||v._status===-1)&&(v._status=1,v._result=X,V.status===void 0&&(V.status="fulfilled",V.value=X))},function(X){(v._status===0||v._status===-1)&&(v._status=2,v._result=X,V.status===void 0&&(V.status="rejected",V.reason=X))}),v._status===-1&&(v._status=0,v._result=V)}if(v._status===1)return v._result.default;throw v._result}var mt=typeof reportError=="function"?reportError:function(v){if(typeof window=="object"&&typeof window.ErrorEvent=="function"){var D=new window.ErrorEvent("error",{bubbles:!0,cancelable:!0,message:typeof v=="object"&&v!==null&&typeof v.message=="string"?String(v.message):String(v),error:v});if(!window.dispatchEvent(D))return}else if(typeof process=="object"&&typeof process.emit=="function"){process.emit("uncaughtException",v);return}console.error(v)};function yl(v){var D=it.T,V={};V.types=D!==null?D.types:null,it.T=V;try{var X=v(),G=it.S;G!==null&&G(V,X),typeof X=="object"&&X!==null&&typeof X.then=="function"&&X.then(lt,mt)}catch(tt){mt(tt)}finally{D!==null&&V.types!==null&&(D.types=V.types),it.T=D}}function wl(v){var D=it.T;if(D!==null){var V=D.types;V===null?D.types=[v]:V.indexOf(v)===-1&&V.push(v)}else yl(wl.bind(null,v))}var Jl={map:K,forEach:function(v,D,V){K(v,function(){D.apply(this,arguments)},V)},count:function(v){var D=0;return K(v,function(){D++}),D},toArray:function(v){return K(v,function(D){return D})||[]},only:function(v){if(!Xt(v))throw Error("React.Children.only expected to receive a single React element child.");return v}};return W.Activity=S,W.Children=Jl,W.Component=Q,W.Fragment=d,W.Profiler=T,W.PureComponent=st,W.StrictMode=o,W.Suspense=x,W.ViewTransition=C,W.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=it,W.__COMPILER_RUNTIME={__proto__:null,c:function(v){return it.H.useMemoCache(v)}},W.addTransitionType=wl,W.cache=function(v){return function(){return v.apply(null,arguments)}},W.cacheSignal=function(){return null},W.cloneElement=function(v,D,V){if(v==null)throw Error("The argument must be a React element, but you passed "+v+".");var X=P({},v.props),G=v.key;if(D!=null)for(tt in D.key!==void 0&&(G=""+D.key),D)!al.call(D,tt)||tt==="key"||tt==="__self"||tt==="__source"||tt==="ref"&&D.ref===void 0||(X[tt]=D[tt]);var tt=arguments.length-2;if(tt===1)X.children=V;else if(1<tt){for(var et=Array(tt),w=0;w<tt;w++)et[w]=arguments[w+2];X.children=et}return Gt(v.type,G,X)},W.createContext=function(v){return v={$$typeof:M,_currentValue:v,_currentValue2:v,_threadCount:0,Provider:null,Consumer:null},v.Provider=v,v.Consumer={$$typeof:O,_context:v},v},W.createElement=function(v,D,V){var X,G={},tt=null;if(D!=null)for(X in D.key!==void 0&&(tt=""+D.key),D)al.call(D,X)&&X!=="key"&&X!=="__self"&&X!=="__source"&&(G[X]=D[X]);var et=arguments.length-2;if(et===1)G.children=V;else if(1<et){for(var w=Array(et),J=0;J<et;J++)w[J]=arguments[J+2];G.children=w}if(v&&v.defaultProps)for(X in et=v.defaultProps,et)G[X]===void 0&&(G[X]=et[X]);return Gt(v,tt,G)},W.createRef=function(){return{current:null}},W.forwardRef=function(v){return{$$typeof:R,render:v}},W.isValidElement=Xt,W.lazy=function(v){return{$$typeof:p,_payload:{_status:-1,_result:v},_init:St}},W.memo=function(v,D){return{$$typeof:q,type:v,compare:D===void 0?null:D}},W.startTransition=yl,W.unstable_useCacheRefresh=function(){return it.H.useCacheRefresh()},W.use=function(v){return it.H.use(v)},W.useActionState=function(v,D,V){return it.H.useActionState(v,D,V)},W.useCallback=function(v,D){return it.H.useCallback(v,D)},W.useContext=function(v){return it.H.useContext(v)},W.useDebugValue=function(){},W.useDeferredValue=function(v,D){return it.H.useDeferredValue(v,D)},W.useEffect=function(v,D){return it.H.useEffect(v,D)},W.useEffectEvent=function(v){return it.H.useEffectEvent(v)},W.useId=function(){return it.H.useId()},W.useImperativeHandle=function(v,D,V){return it.H.useImperativeHandle(v,D,V)},W.useInsertionEffect=function(v,D){return it.H.useInsertionEffect(v,D)},W.useLayoutEffect=function(v,D){return it.H.useLayoutEffect(v,D)},W.useMemo=function(v,D){return it.H.useMemo(v,D)},W.useOptimistic=function(v,D){return it.H.useOptimistic(v,D)},W.useReducer=function(v,D,V){return it.H.useReducer(v,D,V)},W.useRef=function(v){return it.H.useRef(v)},W.useState=function(v){return it.H.useState(v)},W.useSyncExternalStore=function(v,D,V){return it.H.useSyncExternalStore(v,D,V)},W.useTransition=function(){return it.H.useTransition()},W.version="19.3.1",W}var w0;function io(){return w0||(w0=1,Zs.exports=bg()),Zs.exports}var F=io(),Ks={exports:{}},va={},Js={exports:{}},$s={};var L0;function _g(){return L0||(L0=1,(function(c){function s(H,$){var K=H.length;H.push($);t:for(;0<K;){var St=K-1>>>1,mt=H[St];if(0<T(mt,$))H[St]=$,H[K]=mt,K=St;else break t}}function d(H){return H.length===0?null:H[0]}function o(H){if(H.length===0)return null;var $=H[0],K=H.pop();if(K!==$){H[0]=K;t:for(var St=0,mt=H.length,yl=mt>>>1;St<yl;){var wl=2*(St+1)-1,Jl=H[wl],v=wl+1,D=H[v];if(0>T(Jl,K))v<mt&&0>T(D,Jl)?(H[St]=D,H[v]=K,St=v):(H[St]=Jl,H[wl]=K,St=wl);else if(v<mt&&0>T(D,K))H[St]=D,H[v]=K,St=v;else break t}}return $}function T(H,$){var K=H.sortIndex-$.sortIndex;return K!==0?K:H.id-$.id}if(c.unstable_now=void 0,typeof performance=="object"&&typeof performance.now=="function"){var O=performance;c.unstable_now=function(){return O.now()}}else{var M=Date,R=M.now();c.unstable_now=function(){return M.now()-R}}var x=[],q=[],p=1,S=null,C=3,U=!1,B=!1,I=!1,P=!1,Rt=typeof setTimeout=="function"?setTimeout:null,Q=typeof clearTimeout=="function"?clearTimeout:null,gt=typeof setImmediate<"u"?setImmediate:null;function st(H){for(var $=d(q);$!==null;){if($.callback===null)o(q);else if($.startTime<=H)o(q),$.sortIndex=$.expirationTime,s(x,$);else break;$=d(q)}}function qt(H){if(I=!1,st(H),!B)if(d(x)!==null)B=!0,Lt||(Lt=!0,Xt());else{var $=d(q);$!==null&&zt(qt,$.startTime-H)}}var Lt=!1,lt=-1,it=5,al=-1;function Gt(){return P?!0:!(c.unstable_now()-al<it)}function $t(){if(P=!1,Lt){var H=c.unstable_now();al=H;var $=!0;try{t:{B=!1,I&&(I=!1,Q(lt),lt=-1),U=!0;var K=C;try{l:{for(st(H),S=d(x);S!==null&&!(S.expirationTime>H&&Gt());){var St=S.callback;if(typeof St=="function"){S.callback=null,C=S.priorityLevel;var mt=St(S.expirationTime<=H);if(H=c.unstable_now(),typeof mt=="function"){S.callback=mt,st(H),$=!0;break l}S===d(x)&&o(x),st(H)}else o(x);S=d(x)}if(S!==null)$=!0;else{var yl=d(q);yl!==null&&zt(qt,yl.startTime-H),$=!1}}break t}finally{S=null,C=K,U=!1}$=void 0}}finally{$?Xt():Lt=!1}}}var Xt;if(typeof gt=="function")Xt=function(){gt($t)};else if(typeof MessageChannel<"u"){var Yl=new MessageChannel,ce=Yl.port2;Yl.port1.onmessage=$t,Xt=function(){ce.postMessage(null)}}else Xt=function(){Rt($t,0)};function zt(H,$){lt=Rt(function(){H(c.unstable_now())},$)}c.unstable_IdlePriority=5,c.unstable_ImmediatePriority=1,c.unstable_LowPriority=4,c.unstable_NormalPriority=3,c.unstable_Profiling=null,c.unstable_UserBlockingPriority=2,c.unstable_cancelCallback=function(H){H.callback=null},c.unstable_forceFrameRate=function(H){0>H||125<H?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):it=0<H?Math.floor(1e3/H):5},c.unstable_getCurrentPriorityLevel=function(){return C},c.unstable_next=function(H){switch(C){case 1:case 2:case 3:var $=3;break;default:$=C}var K=C;C=$;try{return H()}finally{C=K}},c.unstable_requestPaint=function(){P=!0},c.unstable_runWithPriority=function(H,$){switch(H){case 1:case 2:case 3:case 4:case 5:break;default:H=3}var K=C;C=H;try{return $()}finally{C=K}},c.unstable_scheduleCallback=function(H,$,K){var St=c.unstable_now();switch(typeof K=="object"&&K!==null?(K=K.delay,K=typeof K=="number"&&0<K?St+K:St):K=St,H){case 1:var mt=-1;break;case 2:mt=250;break;case 5:mt=1073741823;break;case 4:mt=1e4;break;default:mt=5e3}return mt=K+mt,H={id:p++,callback:$,priorityLevel:H,startTime:K,expirationTime:mt,sortIndex:-1},K>St?(H.sortIndex=K,s(q,H),d(x)===null&&H===d(q)&&(I?(Q(lt),lt=-1):I=!0,zt(qt,K-St))):(H.sortIndex=mt,s(x,H),B||U||(B=!0,Lt||(Lt=!0,Xt()))),H},c.unstable_shouldYield=Gt,c.unstable_wrapCallback=function(H){var $=C;return function(){var K=C;C=$;try{return H.apply(this,arguments)}finally{C=K}}}})($s)),$s}var G0;function Eg(){return G0||(G0=1,Js.exports=_g()),Js.exports}var ks={exports:{}},el={};var X0;function Tg(){if(X0)return el;X0=1;var c=io();function s(p){var S="https://react.dev/errors/"+p;if(1<arguments.length){S+="?args[]="+encodeURIComponent(arguments[1]);for(var C=2;C<arguments.length;C++)S+="&args[]="+encodeURIComponent(arguments[C])}return"Minified React error #"+p+"; visit "+S+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function d(){}var o={d:{f:d,r:function(){throw Error(s(522))},D:d,C:d,L:d,m:d,X:d,S:d,M:d},p:0,findDOMNode:null},T=Symbol.for("react.portal"),O=Symbol.for("react.recoverable"),M=Symbol.for("react.optimistic_key");function R(p,S,C){var U=3<arguments.length&&arguments[3]!==void 0?arguments[3]:null;return{$$typeof:T,key:U==null?null:U===M?M:""+U,children:p,containerInfo:S,implementation:C}}var x=c.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;function q(p,S){if(p==="font")return"";if(typeof S=="string")return S==="use-credentials"?S:""}return el.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=o,el.browser=function(p){return{$$typeof:O,_reason:p}},el.createPortal=function(p,S){var C=2<arguments.length&&arguments[2]!==void 0?arguments[2]:null;if(!S||S.nodeType!==1&&S.nodeType!==9&&S.nodeType!==11)throw Error(s(299));return R(p,S,null,C)},el.flushSync=function(p){var S=x.T,C=o.p;try{if(x.T=null,o.p=2,p)return p()}finally{x.T=S,o.p=C,o.d.f()}},el.preconnect=function(p,S){typeof p=="string"&&(S?(S=S.crossOrigin,S=typeof S=="string"?S==="use-credentials"?S:"":void 0):S=null,o.d.C(p,S))},el.prefetchDNS=function(p){typeof p=="string"&&o.d.D(p)},el.preinit=function(p,S){if(typeof p=="string"&&S&&typeof S.as=="string"){var C=S.as,U=q(C,S.crossOrigin),B=typeof S.integrity=="string"?S.integrity:void 0,I=typeof S.fetchPriority=="string"?S.fetchPriority:void 0;C==="style"?o.d.S(p,typeof S.precedence=="string"?S.precedence:void 0,{crossOrigin:U,integrity:B,fetchPriority:I}):C==="script"&&o.d.X(p,{crossOrigin:U,integrity:B,fetchPriority:I,nonce:typeof S.nonce=="string"?S.nonce:void 0})}},el.preinitModule=function(p,S){if(typeof p=="string")if(typeof S=="object"&&S!==null){if(S.as==null||S.as==="script"){var C=q(S.as,S.crossOrigin);o.d.M(p,{crossOrigin:C,integrity:typeof S.integrity=="string"?S.integrity:void 0,nonce:typeof S.nonce=="string"?S.nonce:void 0,fetchPriority:typeof S.fetchPriority=="string"?S.fetchPriority:void 0})}}else S==null&&o.d.M(p)},el.preload=function(p,S){if(typeof p=="string"&&typeof S=="object"&&S!==null&&typeof S.as=="string"){var C=S.as,U=q(C,S.crossOrigin);o.d.L(p,C,{crossOrigin:U,integrity:typeof S.integrity=="string"?S.integrity:void 0,nonce:typeof S.nonce=="string"?S.nonce:void 0,type:typeof S.type=="string"?S.type:void 0,fetchPriority:typeof S.fetchPriority=="string"?S.fetchPriority:void 0,referrerPolicy:typeof S.referrerPolicy=="string"?S.referrerPolicy:void 0,imageSrcSet:typeof S.imageSrcSet=="string"?S.imageSrcSet:void 0,imageSizes:typeof S.imageSizes=="string"?S.imageSizes:void 0,media:typeof S.media=="string"?S.media:void 0})}},el.preloadModule=function(p,S){if(typeof p=="string")if(S){var C=q(S.as,S.crossOrigin);o.d.m(p,{as:typeof S.as=="string"&&S.as!=="script"?S.as:void 0,crossOrigin:C,integrity:typeof S.integrity=="string"?S.integrity:void 0,nonce:typeof S.nonce=="string"?S.nonce:void 0,fetchPriority:typeof S.fetchPriority=="string"?S.fetchPriority:void 0})}else o.d.m(p)},el.requestFormReset=function(p){o.d.r(p)},el.unstable_batchedUpdates=function(p,S){return p(S)},el.useFormState=function(p,S,C){return x.H.useFormState(p,S,C)},el.useFormStatus=function(){return x.H.useHostTransitionStatus()},el.version="19.3.1",el}var Q0;function Ng(){if(Q0)return ks.exports;Q0=1;function c(){if(!(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__>"u"||typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE!="function"))try{__REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(c)}catch(s){console.error(s)}}return c(),ks.exports=Tg(),ks.exports}var V0;function pg(){if(V0)return va;V0=1;var c=Eg(),s=io(),d=Ng();function o(t){var l="https://react.dev/errors/"+t;if(1<arguments.length){l+="?args[]="+encodeURIComponent(arguments[1]);for(var e=2;e<arguments.length;e++)l+="&args[]="+encodeURIComponent(arguments[e])}return"Minified React error #"+t+"; visit "+l+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function T(t){return!(!t||t.nodeType!==1&&t.nodeType!==9&&t.nodeType!==11)}function O(t){for(var l=t,e=l;e&&!e.alternate;)l=e,(l.flags&4098)!==0&&(t=l.return),e=l.return;for(;l.return;)l=l.return;return l.tag===3?t:null}function M(t){if(t.tag===13){var l=t.memoizedState;if(l===null&&(t=t.alternate,t!==null&&(l=t.memoizedState)),l!==null)return l.dehydrated}return null}function R(t){if(t.tag===31){var l=t.memoizedState;if(l===null&&(t=t.alternate,t!==null&&(l=t.memoizedState)),l!==null)return l.dehydrated}return null}function x(t){if(O(t)!==t)throw Error(o(188))}function q(t){var l=t.alternate;if(!l){if(l=O(t),l===null)throw Error(o(188));return l!==t?null:t}for(var e=t,n=l;;){var u=e.return;if(u===null)break;var a=u.alternate;if(a===null){if(n=u.return,n!==null){e=n;continue}break}if(u.child===a.child){for(a=u.child;a;){if(a===e)return x(u),t;if(a===n)return x(u),l;a=a.sibling}throw Error(o(188))}if(e.return!==n.return)e=u,n=a;else{for(var i=!1,f=u.child;f;){if(f===e){i=!0,e=u,n=a;break}if(f===n){i=!0,n=u,e=a;break}f=f.sibling}if(!i){for(f=a.child;f;){if(f===e){i=!0,e=a,n=u;break}if(f===n){i=!0,n=a,e=u;break}f=f.sibling}if(!i)throw Error(o(189))}}if(e.alternate!==n)throw Error(o(190))}if(e.tag!==3)throw Error(o(188));return e.stateNode.current===e?t:l}function p(t){var l=t.tag;if(l===5||l===26||l===27||l===6)return t;for(t=t.child;t!==null;){if(l=p(t),l!==null)return l;t=t.sibling}return null}function S(t,l,e,n,u,a){for(;t!==null;){if((t.tag===5||t.tag===27||t.tag===6)&&e(t,n,u,a)||(t.tag!==22||t.memoizedState===null)&&(l||t.tag!==5&&t.tag!==27)&&S(t.child,l,e,n,u,a))return!0;t=t.sibling}return!1}function C(t){for(t=t.return;t!==null;){if(t.tag===3||t.tag===5||t.tag===27)return t;t=t.return}return null}function U(t){var l=!1;for(t=t.return;t!==null&&(t.tag===4&&(l=!0),!(t.tag===3||t.tag===5||t.tag===27));)t=t.return;return l}function B(t){var l=[null,null],e=C(t);return e===null||I(l,t,e.child,{foundSelf:!1}),l}function I(t,l,e,n){for(;e!==null;){if(e===l)n.foundSelf=!0;else if(e.tag===5||e.tag===27||e.tag===6){if(n.foundSelf)return t[1]=e,!0;t[0]=e}else if((e.tag!==22||e.memoizedState===null)&&I(t,l,e.child,n))return!0;e=e.sibling}return!1}function P(t){switch(t.tag){case 5:case 27:case 6:return t.stateNode;case 3:return t.stateNode.containerInfo;default:throw Error(o(559))}}var Rt=null,Q=null;function gt(t,l,e){return t===e?!0:t===l?(Rt=t,!0):!1}function st(t,l,e){return t===e?(Q=t,!1):t===l?(Q!==null&&(Rt=t),!0):!1}function qt(t){if(t===null)return null;do t=t===null?null:t.return;while(t&&t.tag!==5&&t.tag!==27&&t.tag!==3);return t||null}function Lt(t,l,e){for(var n=0,u=t;u;u=e(u))n++;u=0;for(var a=l;a;a=e(a))u++;for(;0<n-u;)t=e(t),n--;for(;0<u-n;)l=e(l),u--;for(;n--;){if(t===l||l!==null&&t===l.alternate)return t;t=e(t),l=e(l)}return null}var lt=Object.assign,it=Symbol.for("react.element"),al=Symbol.for("react.transitional.element"),Gt=Symbol.for("react.portal"),$t=Symbol.for("react.fragment"),Xt=Symbol.for("react.strict_mode"),Yl=Symbol.for("react.profiler"),ce=Symbol.for("react.consumer"),zt=Symbol.for("react.context"),H=Symbol.for("react.forward_ref"),$=Symbol.for("react.suspense"),K=Symbol.for("react.suspense_list"),St=Symbol.for("react.memo"),mt=Symbol.for("react.lazy"),yl=Symbol.for("react.activity"),wl=Symbol.for("react.legacy_hidden"),Jl=Symbol.for("react.memo_cache_sentinel"),v=Symbol.for("react.view_transition"),D=Symbol.for("react.recoverable"),V=Symbol.iterator;function X(t){return t===null||typeof t!="object"?null:(t=V&&t[V]||t["@@iterator"],typeof t=="function"?t:null)}var G=Symbol.for("react.client.reference");function tt(t){if(t==null)return null;if(typeof t=="function")return t.$$typeof===G?null:t.displayName||t.name||null;if(typeof t=="string")return t;switch(t){case $t:return"Fragment";case Yl:return"Profiler";case Xt:return"StrictMode";case $:return"Suspense";case K:return"SuspenseList";case yl:return"Activity";case v:return"ViewTransition"}if(typeof t=="object")switch(t.$$typeof){case Gt:return"Portal";case zt:return t.displayName||"Context";case ce:return(t._context.displayName||"Context")+".Consumer";case H:var l=t.render;return t=t.displayName,t||(t=l.displayName||l.name||"",t=t!==""?"ForwardRef("+t+")":"ForwardRef"),t;case St:return l=t.displayName||null,l!==null?l:tt(t.type)||"Memo";case mt:l=t._payload,t=t._init;try{return tt(t(l))}catch{}}return null}var et=Array.isArray,w=s.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,J=d.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,Qt={pending:!1,data:null,method:null,action:null},fc=[],zn=-1;function $l(t){return{current:t}}function kt(t){0>zn||(t.current=fc[zn],fc[zn]=null,zn--)}function pt(t,l){zn++,fc[zn]=t.current,t.current=l}var kl=$l(null),bu=$l(null),pe=$l(null),ba=$l(null);function _a(t,l){switch(pt(pe,l),pt(bu,t),pt(kl,null),l.nodeType){case 9:case 11:t=(t=l.documentElement)&&(t=t.namespaceURI)?Zm(t):0;break;default:if(t=l.tagName,l=l.namespaceURI)l=Zm(l),t=Km(l,t);else switch(t){case"svg":t=1;break;case"math":t=2;break;default:t=0}}kt(kl),pt(kl,t)}function Mn(){kt(kl),kt(bu),kt(pe)}function sc(t){var l=t.memoizedState;l!==null&&(hu._currentValue=l.memoizedState,pt(ba,t)),l=kl.current;var e=Km(l,t.type);l!==e&&(pt(bu,t),pt(kl,e))}function Ea(t){bu.current===t&&(kt(kl),kt(bu)),ba.current===t&&(kt(ba),hu._currentValue=Qt)}var oc,ro;function Oe(t){if(oc===void 0)try{throw Error()}catch(e){var l=e.stack.trim().match(/\n( *(at )?)/);oc=l&&l[1]||"",ro=-1<e.stack.indexOf(`
     at`)?" (<anonymous>)":-1<e.stack.indexOf("@")?"@unknown:0:0":""}return`
@@ -100,7 +110,527 @@ hard：每一步都咬住他回答里最薄弱的那一点，必要时直接举�
 </script>
     <style>:root{--ink: #0B0B0B;--ink-2: #121212;--line: #2A2A2A;--line-strong: #3D3D3D;--paper: #EDEAE3;--paper-dim: #8A877F;--paper-faint: #5A5852;--alert: #C8452F;--serif: "Songti SC", "SimSun", "STSong", serif;--sans: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;--mono: ui-monospace, "Consolas", "Menlo", monospace;--radius: 0;--space-1: 8px;--space-2: 16px;--space-3: 24px;--space-4: 48px;--fs-12: 12px;--fs-13: 13px;--fs-16: 16px;--fs-20: 20px;--fs-28: 28px;--fs-32: 32px;--dur-shake: .12s;--dur-scan: .24s}:root{--dur-stage: .18s;--ease-out: ease-out;--focus-ring: 1px solid var(--alert);--focus-offset: 2px;--field-line: #6B6862}*,*:before,*:after{box-sizing:border-box;border-radius:0}*{margin:0;padding:0}html{font-size:16px;color-scheme:dark;-webkit-text-size-adjust:100%}body{min-height:100vh;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:var(--fs-16);line-height:1.9;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}#root{min-height:100vh}img,svg{display:block;max-width:100%}button,input,textarea,select{font:inherit;color:inherit;background:none;border:none}textarea{resize:none}h1,h2,h3,h4{font-size:var(--fs-28);font-weight:400;line-height:1.3}ul,ol{list-style:none}a{color:inherit;text-decoration:none}mark{background:none;color:inherit}:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}:focus:not(:focus-visible){outline:none}::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:var(--ink)}::-webkit-scrollbar-thumb{background:var(--line);border:none}::-webkit-scrollbar-thumb:hover{background:var(--line-strong)}*{scrollbar-color:var(--line) var(--ink);scrollbar-width:thin}::selection{background:var(--paper);color:var(--ink)}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}@keyframes stage-in{0%{opacity:0}to{opacity:1}}.stage-enter{animation:stage-in var(--dur-stage) var(--ease-out) 1}.app{min-height:100vh;display:flex;flex-direction:column;background:var(--ink)}.app-main{flex:1 0 auto}.app-offline{flex:0 0 auto;width:100%;max-width:816px;margin:0 auto;padding:24px 48px;font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim)}.app-offline__row{display:flex;align-items:baseline;gap:16px}.app-offline__text{flex:1 1 auto}.app-offline__toggle{flex:0 0 auto;padding:0;background:transparent;border-bottom:1px solid var(--field-line);border-radius:var(--radius);color:var(--paper-dim);font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;cursor:pointer}.app-offline__toggle:hover{color:var(--paper);border-bottom-color:var(--paper)}.app-offline__toggle:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}.app-settings{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);display:grid;gap:12px}.app-settings__hint,.app-settings__note{font-size:var(--fs-12);line-height:1.7;letter-spacing:.02em;color:var(--paper-dim)}.app-settings__error{display:flex;align-items:center;gap:8px;font-size:var(--fs-12);line-height:1.7;letter-spacing:.02em;color:var(--paper)}.app-settings__error:before{content:"";flex:0 0 8px;width:8px;height:8px;background:var(--alert)}.app-settings__field{display:grid;gap:6px}.app-settings__label{font-size:var(--fs-13);line-height:1.6;color:var(--paper-dim)}.app-settings__input{width:100%;padding:8px 0;background:transparent;border-bottom:1px solid var(--field-line);border-radius:var(--radius);color:var(--paper);font-family:var(--mono);font-size:var(--fs-13);line-height:1.6}.app-settings__input:focus{outline:none;border-bottom:2px solid var(--alert);padding-bottom:7px}.app-settings__actions{display:flex;gap:16px}.app-settings__btn{padding:8px 16px;background:transparent;border:1px solid var(--field-line);border-radius:var(--radius);color:var(--paper);font-size:var(--fs-13);line-height:1.6;cursor:pointer;transition:border-color var(--dur-stage) var(--ease-out)}.app-settings__btn:hover{border-color:var(--paper)}.app-settings__btn:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}.app-placeholder{max-width:816px;margin:0 auto;padding:64px 48px;font-size:var(--fs-16);line-height:1.9;color:var(--paper-dim)}.app-narrow{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:48px 32px;background:var(--ink);color:var(--paper);font-size:var(--fs-16);line-height:1.9;text-align:center}.app-narrow__title{font-size:var(--fs-16);font-weight:600}.app-narrow__desc{max-width:420px;color:var(--paper-dim);font-size:var(--fs-13)}.app-narrow__btn{padding:10px 20px;border:1px solid var(--paper-dim);background:transparent;color:var(--paper);font-family:inherit;font-size:var(--fs-13);line-height:1.6;cursor:pointer}.app-narrow__btn:hover{border-color:var(--paper)}.brief{max-width:816px;margin:0 auto;padding:64px 48px 48px}.brief__title{font-family:var(--serif);font-size:var(--fs-28);line-height:1.3;letter-spacing:.08em;color:var(--paper)}.brief__tagline{margin-top:12px;font-size:var(--fs-16);line-height:1.9;color:var(--paper-dim)}.brief__notice{margin-top:24px;display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--line);font-size:var(--fs-13);line-height:1.9;color:var(--paper)}.brief-dot{flex:0 0 8px;width:8px;height:8px;background:var(--alert)}.brief__section{margin-top:48px}.brief__section-title{font-size:var(--fs-16);line-height:1.3;color:var(--paper)}.brief-source{margin-top:16px;display:flex;align-items:center;gap:16px}.brief-file{position:relative;flex:0 0 auto;display:inline-flex;align-items:center;padding:8px 16px;border:1px solid var(--field-line);border-radius:var(--radius);color:var(--paper);font-size:var(--fs-13);line-height:1.6;cursor:pointer;transition:border-color var(--dur-stage) var(--ease-out)}.brief-file:hover{border-color:var(--paper)}.brief-file:focus-within{outline:var(--focus-ring);outline-offset:var(--focus-offset)}.brief-file__input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.brief-file__label{pointer-events:none}.brief-source__hint{font-size:var(--fs-13);line-height:1.7;color:var(--paper-dim)}.brief-source__ok{margin-top:8px;font-family:var(--mono);font-size:var(--fs-12);line-height:1.6;letter-spacing:.02em;color:var(--paper-dim)}.inter-hint{margin-bottom:8px;font-size:var(--fs-12);line-height:1.6;color:var(--paper-dim)}.brief__grid{margin-top:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.brief-card{position:relative;display:block;width:100%;text-align:left;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;cursor:pointer;transition:border-color var(--dur-stage) var(--ease-out)}.brief-card:hover{border-color:var(--line-strong)}.brief-card[aria-pressed=true]{border-color:var(--alert)}.brief-card[aria-pressed=true]:before{content:"";position:absolute;top:0;left:0;width:10px;height:10px;background:var(--alert)}.brief-card__name{display:block;font-size:var(--fs-16);line-height:1.5;color:var(--paper)}.brief-card__desc{display:block;margin-top:8px;font-size:var(--fs-13);line-height:1.7;color:var(--paper-dim)}.brief-field{display:block;width:100%;min-height:240px;margin-top:16px;padding:12px 0;background:transparent;color:var(--paper);border-bottom:1px solid var(--field-line);border-radius:var(--radius);font-family:var(--serif);font-size:var(--fs-16);line-height:1.9;white-space:pre-wrap;resize:vertical;transition:border-bottom-color var(--dur-stage) var(--ease-out)}.brief-field::placeholder{color:var(--paper-dim);opacity:1}.brief-field:hover{border-bottom-color:var(--paper-dim)}.brief-field:focus{outline:none;border-bottom:2px solid var(--alert);padding-bottom:11px}.brief-field[aria-invalid=true]{border-bottom-color:var(--alert)}.brief-count{margin-top:12px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim)}.brief-count--alert{color:var(--paper)}.brief-error{margin-top:8px;display:flex;align-items:center;gap:8px;font-size:var(--fs-13);line-height:1.9;color:var(--paper)}.brief-error:empty{display:none}.brief-choices{margin-top:16px;display:flex;align-items:center;gap:32px}.brief-choice{display:inline-flex;align-items:center;gap:8px;cursor:pointer}.brief-choice__input{position:absolute;width:1px;height:1px;opacity:0}.brief-choice__box{flex:0 0 12px;width:12px;height:12px;border:1px solid var(--line-strong);background:transparent}.brief-choice__input:checked+.brief-choice__box{background:var(--alert);border-color:var(--alert)}.brief-choice__input:focus-visible+.brief-choice__box{outline:var(--focus-ring);outline-offset:var(--focus-offset)}.brief-choice__text{font-size:var(--fs-16);line-height:1.3;color:var(--paper-dim)}.brief-choice__input:checked~.brief-choice__text{color:var(--paper)}.brief__actions{margin-top:48px;display:flex;justify-content:flex-end}.brief-submit{min-height:44px;padding:14px 28px;background:var(--paper);color:var(--ink);border:1px solid var(--paper);border-radius:var(--radius);font-family:var(--sans);font-size:var(--fs-16);line-height:1.3;letter-spacing:.04em;cursor:pointer;transition:background-color var(--dur-stage) var(--ease-out),color var(--dur-stage) var(--ease-out),border-color var(--dur-stage) var(--ease-out)}.brief-submit:hover:not([aria-disabled=true]){background:var(--ink);color:var(--paper);border-color:var(--ink)}.brief-submit:active:not([aria-disabled=true]){background:var(--ink-2);color:var(--paper);border-color:var(--line-strong)}.brief-submit[aria-disabled=true]{background:transparent;color:var(--paper-dim);border:1px solid var(--line);cursor:not-allowed}.app--fixed{height:100dvh;overflow:hidden}.app--fixed .app-main{display:flex;flex-direction:column;flex:1 1 0;min-height:0}.app--fixed .app-offline{max-width:none;padding:12px 48px}.inter{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}.inter-bar{flex:0 0 56px;height:56px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 48px;border-bottom:1px solid var(--line)}.inter-bar__left{font-size:var(--fs-16);line-height:1.3;color:var(--paper)}.inter-bar__mid{justify-self:center}.inter-bar__right{justify-self:end;font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim);font-variant-numeric:tabular-nums}.layer-meter{display:flex;align-items:center;gap:6px}.layer-meter__dot{flex:0 0 8px;width:8px;height:8px;border:1px solid var(--line-strong)}.layer-meter__dot[data-state=done]{border-color:var(--paper-dim)}.layer-meter__dot[data-state=current]{background:var(--alert);border-color:var(--alert)}.inter-body{flex:1 1 auto;min-height:0;display:flex}.inter-pane{width:45%;min-width:0;overflow-y:auto;padding:32px 32px 32px 48px;border-right:1px solid var(--line)}.material-pane{font-family:var(--serif);font-size:var(--fs-16);line-height:1.9;color:var(--paper-dim);white-space:pre-wrap}.claim-active{border:1px solid var(--alert);border-left-width:2px;padding:2px 6px;margin:0 -6px;color:var(--paper)}.claim-done{border-left:1px solid var(--paper-dim);padding-left:6px;margin-left:-6px}.inter-right{width:55%;min-width:0;display:flex;flex-direction:column}.inter-flow{flex:1 1 auto;min-height:0;overflow-y:auto;padding:32px 48px 0 32px}.inter-opening{font-size:var(--fs-16);line-height:1.9;color:var(--paper-dim)}.question-history{margin-top:24px;padding-top:16px;border-top:1px solid var(--line)}.question-history__label{font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim)}.question-history__text{margin-top:8px;font-size:var(--fs-13);line-height:1.9;color:var(--paper-dim)}.question-history__answer{margin-top:8px;font-size:var(--fs-13);line-height:1.9;color:var(--paper-dim);white-space:pre-wrap;word-break:break-word}.question-expand{margin-top:8px;padding:0;background:transparent;border-bottom:1px solid var(--field-line);font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper);cursor:pointer}.question-expand:hover{border-bottom-color:var(--paper)}.question-active{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);min-height:68px;font-size:var(--fs-20);line-height:1.8;color:var(--paper)}.question-active__pending{color:var(--paper-dim)}.inter-input{flex:0 0 auto;border-top:1px solid var(--line);padding:24px 48px 32px 32px}.inter-input__field{display:block;width:100%;min-height:96px;padding:12px 0;background:transparent;color:var(--paper);border-bottom:1px solid var(--field-line);border-radius:var(--radius);font-family:var(--serif);font-size:var(--fs-16);line-height:1.9;white-space:pre-wrap;resize:none;transition:border-bottom-color var(--dur-stage) var(--ease-out)}.inter-input__field::placeholder{color:var(--paper-dim);opacity:1}.inter-input__field:focus{outline:none;border-bottom:2px solid var(--alert);padding-bottom:11px}.inter-input__field[aria-disabled=true]{color:var(--paper-dim);border-bottom-color:var(--line);cursor:not-allowed}.inter-actions{margin-top:16px;display:flex;align-items:center;gap:16px}.inter-btn{min-height:44px;padding:12px 24px;background:transparent;border:1px solid transparent;border-radius:var(--radius);font-family:var(--sans);font-size:var(--fs-16);line-height:1.3;letter-spacing:.04em;cursor:pointer;transition:background-color var(--dur-stage) var(--ease-out),color var(--dur-stage) var(--ease-out),border-color var(--dur-stage) var(--ease-out)}.inter-btn--primary{background:var(--paper);color:var(--ink);border-color:var(--paper)}.inter-btn--primary:hover:not([aria-disabled=true]){background:var(--ink);color:var(--paper)}.inter-btn--ghost{color:var(--paper);border-color:var(--field-line)}.inter-btn--ghost:hover:not([aria-disabled=true]){border-color:var(--paper)}.inter-btn--weak{padding:12px 0;color:var(--paper-dim)}.inter-btn--weak:hover{color:var(--paper)}.inter-btn[aria-disabled=true]{background:transparent;color:var(--paper-dim);border-color:var(--line);cursor:not-allowed}.verdict{max-width:976px;margin:0 auto;padding:64px 48px 48px}.verdict__head{display:flex;align-items:baseline;justify-content:space-between;gap:24px}.verdict__title{font-family:var(--serif);font-size:var(--fs-28);line-height:1.3;letter-spacing:.08em;color:var(--paper)}.verdict__date{font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim);font-variant-numeric:tabular-nums}.verdict__closing{margin-top:12px;font-size:var(--fs-13);line-height:1.9;color:var(--paper-dim)}.verdict__line{margin-top:16px;font-size:var(--fs-20);line-height:1.8;color:var(--paper)}.verdict__cards{margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}.metric-card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px}.metric-card__value{font-family:var(--mono);font-size:var(--fs-32);line-height:1.2;color:var(--paper);font-variant-numeric:tabular-nums}.metric-card__label{margin-top:8px;font-size:var(--fs-12);line-height:1.4;color:var(--paper-dim)}.verdict__section-title{margin-top:64px;font-size:var(--fs-16);line-height:1.3;color:var(--paper)}.verdict__blocks{margin-top:16px}.verdict__empty{font-size:var(--fs-16);line-height:1.9;color:var(--paper-dim)}.verdict-block{padding:24px 0;border-bottom:1px solid var(--line)}.verdict-block__head{display:flex;align-items:center;gap:12px}.verdict-dot{flex:0 0 8px;width:8px;height:8px;background:var(--alert)}.verdict-block__index{flex:0 0 24px;font-family:var(--mono);font-size:var(--fs-12);line-height:1.4;letter-spacing:.02em;color:var(--paper-dim);font-variant-numeric:tabular-nums}.verdict-block__quote{font-size:var(--fs-16);line-height:1.9;color:var(--paper);word-break:break-word}.verdict-block__meta{margin-top:8px;margin-left:24px;font-size:var(--fs-13);line-height:1.9;color:var(--paper-dim)}.verdict__actions{margin-top:48px;display:flex;justify-content:flex-end;gap:16px}.verdict-btn{min-height:44px;padding:12px 24px;background:transparent;color:var(--paper);border:1px solid var(--field-line);border-radius:var(--radius);font-family:var(--sans);font-size:var(--fs-16);line-height:1.3;letter-spacing:.04em;cursor:pointer;transition:border-color var(--dur-stage) var(--ease-out),color var(--dur-stage) var(--ease-out)}.verdict-btn:hover{border-color:var(--paper)}.verdict__note{margin-top:16px;display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--fs-13);line-height:1.9;color:var(--paper)}
 </style>
-  </head>
+  
+<style id="aiq-polish">
+/* ============================================================
+   AI 拷问官 · 视觉与响应式补丁（2026-11-25）
+   只加样式，不改 React 源码；保留原始黑纸/衬线/红色标记的编辑气质。
+   ============================================================ */
+:root{
+  --aiq-max: 1080px;
+  --aiq-dim-strong: #B4AFA4;
+  --aiq-surface: #101010;
+  --aiq-surface-2: #141414;
+  --aiq-rule: #3B3B3B;
+}
+body{
+  overflow-x: hidden;
+  background:
+    radial-gradient(1200px 560px at 50% -12%, #171717 0%, rgba(11,11,11,0) 62%),
+    var(--ink);
+}
+
+/* ---------- 简报 / 首屏 ---------- */
+.brief{
+  max-width: var(--aiq-max);
+  padding: 40px 48px 40px;
+}
+.brief::before{
+  content: "AI INTERROGATOR · 只问不答 · 对抗式质检";
+  display: block;
+  margin-bottom: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--aiq-rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: .18em;
+  color: var(--paper-dim);
+  text-transform: uppercase;
+}
+.brief__title{
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  font-size: clamp(40px, 5.2vw, 66px);
+  line-height: 1.04;
+  letter-spacing: .03em;
+}
+.brief__title::after{
+  content: "";
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  background: var(--alert);
+  transform: translateY(-.5em);
+}
+.brief__tagline{
+  margin-top: 16px;
+  max-width: 54ch;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--paper);
+}
+.brief__tagline::after{
+  content: "贴入材料 · 事实 → 依据 → 前提 · 只给卡点，不给答案";
+  display: block;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: .06em;
+  color: var(--paper-dim);
+}
+.brief__notice{
+  margin-top: 18px;
+  padding: 10px 14px;
+  border-color: var(--line-strong);
+}
+.brief__section{
+  margin-top: 34px;
+}
+.brief__section-title{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: .02em;
+}
+.brief__section-title::after{
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line);
+}
+.brief__grid{
+  margin-top: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  counter-reset: brief-card;
+}
+.brief-card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 122px;
+  padding: 18px 16px 16px;
+  background: linear-gradient(180deg, #131313 0%, #0F0F0F 100%);
+  border-color: var(--line);
+  counter-increment: brief-card;
+  transition: border-color .18s ease, transform .18s ease, background-color .18s ease;
+}
+.brief-card::before{
+  content: "0" counter(brief-card);
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: .1em;
+  color: var(--paper-faint);
+}
+.brief-card:hover{
+  border-color: var(--paper-dim);
+  background: var(--aiq-surface-2);
+  transform: translateY(-2px);
+}
+.brief-card[aria-pressed="true"]{
+  border-color: var(--alert);
+  background: linear-gradient(180deg, #171211 0%, #120F0E 100%);
+}
+.brief-card[aria-pressed="true"]::before{
+  content: "0" counter(brief-card);
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--alert);
+}
+.brief-card[aria-pressed="true"]::after{
+  content: "已选";
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--alert);
+}
+.brief-card:focus-visible{
+  outline: 2px solid var(--paper);
+  outline-offset: 2px;
+}
+.brief-card__name{
+  font-size: 17px;
+  line-height: 1.5;
+}
+.brief-card__desc{
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--aiq-dim-strong);
+}
+
+/* ---------- 材料输入 ---------- */
+.brief-source{
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+.brief-file{
+  padding: 10px 16px;
+  border-color: var(--line-strong);
+}
+.brief-file__label::before{
+  content: "＋ ";
+  color: var(--alert);
+}
+.brief-file:hover{
+  border-color: var(--paper);
+  background: #121212;
+}
+.brief-source__hint{
+  font-size: 13px;
+}
+.brief-field{
+  margin-top: 14px;
+  min-height: 190px;
+  padding: 18px 20px;
+  background: var(--aiq-surface);
+  border: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.85;
+  transition: border-color .18s ease, background-color .18s ease;
+}
+.brief-field:hover{
+  border-color: var(--line-strong);
+  background: #121212;
+}
+.brief-field:focus{
+  border: 1px solid var(--alert);
+  padding-bottom: 18px;
+  background: #131313;
+}
+.brief-field::placeholder{
+  color: var(--paper-dim);
+}
+.brief-count{
+  margin-top: 10px;
+  letter-spacing: .03em;
+}
+.brief-error{
+  color: var(--paper);
+}
+
+/* ---------- 强度：分段控件 ---------- */
+.brief-choices{
+  margin-top: 14px;
+  display: flex;
+  gap: 0;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--line-strong);
+}
+.brief-choice{
+  position: relative;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-right: 1px solid var(--line-strong);
+  transition: background-color .16s ease, color .16s ease;
+}
+.brief-choice:last-child{
+  border-right: 0;
+}
+.brief-choice:hover{
+  background: var(--aiq-surface-2);
+}
+.brief-choice__box{
+  display: none;
+}
+.brief-choice:has(.brief-choice__input:checked){
+  background: var(--paper);
+}
+.brief-choice:has(.brief-choice__input:checked) .brief-choice__text{
+  color: var(--ink);
+}
+.brief-choice__text{
+  font-size: 15px;
+  line-height: 1.4;
+}
+.brief-choice:focus-within{
+  outline: 2px solid var(--paper);
+  outline-offset: -2px;
+}
+
+/* ---------- 主动作 ---------- */
+.brief__actions{
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 12px 0 14px;
+  border-top: 1px solid var(--line);
+  justify-content: flex-start;
+  background: var(--ink);
+  box-shadow: 0 -14px 26px rgba(11,11,11,.92);
+}
+.brief__actions::before{
+  content: "先选场合，再贴入材料";
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .05em;
+  color: var(--paper-dim);
+}
+.brief__actions:has(.brief-submit:not([aria-disabled="true"]))::before{
+  content: "已就绪 · 开始后按事实 → 依据 → 前提追问";
+  color: var(--paper);
+}
+.brief-submit{
+  min-height: 52px;
+  padding: 16px 32px;
+  font-size: 16px;
+  letter-spacing: .06em;
+}
+.brief-submit:hover:not([aria-disabled="true"]){
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+  transform: translateX(2px);
+}
+.brief-submit:active:not([aria-disabled="true"]){
+  transform: translateX(0);
+}
+.brief-submit[aria-disabled="true"]{
+  opacity: .62;
+}
+
+/* ---------- 拷问过程 ---------- */
+.app-offline{
+  max-width: var(--aiq-max);
+  padding: 16px 48px;
+  border-top: 1px solid var(--line);
+}
+.inter-bar{
+  height: 60px;
+  padding: 0 48px;
+  background: rgba(11,11,11,.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.inter-bar__left{
+  font-family: var(--serif);
+  letter-spacing: .04em;
+}
+.inter-pane{
+  position: relative;
+  background: #0D0D0D;
+}
+.inter-pane::before{
+  content: "材料 · 原文";
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: block;
+  padding: 0 0 10px;
+  background: #0D0D0D;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .14em;
+  color: var(--paper-dim);
+}
+.material-pane{
+  font-size: 15px;
+}
+.question-active{
+  padding-left: 16px;
+  border-left: 2px solid var(--alert);
+  font-size: clamp(20px, 2.1vw, 26px);
+  letter-spacing: .01em;
+}
+.question-history__label{
+  color: var(--paper-faint);
+}
+.inter-input{
+  background: var(--ink);
+}
+.inter-btn{
+  letter-spacing: .04em;
+}
+
+/* ---------- 报告 ---------- */
+.verdict__cards{
+  gap: 12px;
+}
+.metric-card{
+  background: linear-gradient(180deg, #131313, #0F0F0F);
+}
+.metric-card__value{
+  letter-spacing: -.01em;
+}
+.verdict-block{
+  padding: 20px 0;
+}
+.verdict-btn{
+  min-height: 44px;
+}
+
+/* ---------- 窄屏 / 手机 ---------- */
+.app-narrow{
+  display: none !important;
+}
+@media (max-width: 1099px){
+  .brief__grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1023px){
+  .brief{
+    padding: 24px 20px 32px;
+  }
+  .brief::before{
+    margin-bottom: 18px;
+    letter-spacing: .12em;
+  }
+  .brief__title{
+    font-size: clamp(34px, 9.6vw, 48px);
+    gap: 14px;
+  }
+  .brief__tagline{
+    font-size: 15px;
+  }
+  .brief__tagline::after{
+    margin-top: 10px;
+  }
+  .brief__section{
+    margin-top: 28px;
+  }
+  .brief-card{
+    min-height: 0;
+  }
+  .brief-field{
+    min-height: 168px;
+  }
+  .brief__actions{
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+  .brief__actions::before{
+    flex: 1 0 100%;
+    order: 2;
+  }
+  .brief__actions .brief-submit{
+    order: 1;
+  }
+  .brief-submit{
+    width: 100%;
+  }
+  .app-offline{
+    padding: 14px 20px;
+  }
+  .app-offline__row{
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .inter-bar{
+    height: auto;
+    min-height: 56px;
+    padding: 10px 18px;
+    row-gap: 6px;
+    grid-template-columns: 1fr auto;
+  }
+  .inter-bar__left{
+    font-size: 15px;
+  }
+  .inter-bar__mid{
+    justify-self: end;
+  }
+  .inter-bar__right{
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .inter-body{
+    flex-direction: column;
+  }
+  .inter-pane{
+    width: auto;
+    max-height: 30vh;
+    padding: 16px 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    background: #0D0D0D;
+  }
+  .inter-right{
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .inter-flow{
+    padding: 18px 18px 0;
+  }
+  .inter-input{
+    padding: 14px 18px 20px;
+  }
+  .verdict{
+    padding: 32px 18px 40px;
+  }
+  .verdict__head{
+    flex-direction: column;
+    gap: 6px;
+  }
+  .verdict__cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 28px;
+  }
+  .verdict__actions{
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+  .app-settings__actions{
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 559px){
+  .brief__grid{
+    grid-template-columns: 1fr;
+  }
+  .brief-choices{
+    width: 100%;
+  }
+  .brief-choice{
+    flex: 1 1 0;
+    text-align: center;
+    padding: 10px 8px;
+  }
+  .verdict__cards{
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .brief-card,
+  .brief-submit,
+  .brief-file{
+    transition: none !important;
+    transform: none !important;
+  }
+}
+</style>
+</head>
   <body>
     <div id="root"></div>
     <noscript>本产品需要 JavaScript</noscript>
