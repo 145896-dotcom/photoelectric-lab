@@ -624,6 +624,139 @@ body{
     transform: none !important;
   }
 }
+
+/* ============================================================
+   Round 2 · UI 深化（2026-11-25）
+   宽屏两栏工作台，保留原黑纸/衬线/红色标记。
+   ============================================================ */
+@media (min-width: 1100px){
+  .brief{
+    max-width: 1120px;
+    column-count: 2;
+    column-gap: 64px;
+    padding-top: 36px;
+  }
+  .brief::before{
+    column-span: all;
+    margin-bottom: 20px;
+  }
+  .brief__title{
+    font-size: clamp(44px, 4.4vw, 60px);
+    text-wrap: balance;
+  }
+  .brief__tagline{
+    margin-top: 14px;
+    font-size: 16px;
+  }
+  .brief__tagline::after{
+    margin-top: 10px;
+  }
+  .brief__section{
+    margin-top: 26px;
+  }
+  .brief__title,
+  .brief__tagline,
+  .brief__notice,
+  .brief__section,
+  .brief__actions{
+    break-inside: avoid;
+  }
+  .brief .brief__section:nth-of-type(2){
+    break-before: column;
+    margin-top: 0;
+  }
+  .brief__grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .brief-card{
+    min-height: 108px;
+    padding: 14px 14px 16px;
+  }
+  .brief-card__name{
+    font-size: 16px;
+  }
+  .brief-card__desc{
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .brief-card::before,
+  .brief-card[aria-pressed="true"]::before{
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
+    letter-spacing: 0;
+    opacity: .55;
+  }
+  .brief-card[aria-pressed="true"]::before{
+    opacity: .9;
+  }
+  .brief-field{
+    min-height: 168px;
+  }
+  .brief__actions{
+    margin-top: 22px;
+  }
+}
+
+/* 问句：加一个 mono 小标，强调“当前追问” */
+.question-active{
+  position: relative;
+  padding-top: 22px;
+}
+.question-active::before{
+  content: "当前追问 · CURRENT QUESTION";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .14em;
+  color: var(--paper-dim);
+}
+
+/* 报告页：编辑式刊头 */
+.verdict{
+  padding-top: 56px;
+}
+.verdict::before{
+  content: "SESSION REPORT · 卡点报告";
+  display: block;
+  margin-bottom: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--aiq-rule);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .16em;
+  color: var(--paper-dim);
+}
+.verdict__title{
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.1;
+}
+.metric-card{
+  border-top: 2px solid var(--line-strong);
+}
+.metric-card__value{
+  font-size: 36px;
+}
+
+/* 页脚状态点 */
+.app-offline__text::before{
+  content: "●";
+  margin-right: 8px;
+  font-size: 8px;
+  vertical-align: middle;
+  color: var(--alert);
+}
+
+/* 键盘焦点更明显 */
+:focus-visible{
+  outline: 2px solid var(--alert);
+  outline-offset: 3px;
+}
 </style>
 </head>
   <body>

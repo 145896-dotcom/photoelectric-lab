@@ -40,3 +40,4 @@ React 19 + Vite 7 + TypeScript。入口是单个 HTML（约 290 KB），**Word /
 - 响应式：去掉「窗口太窄」遮罩，手机/平板改为上下堆叠（材料区 30vh 可滚动），首屏与拷问流程都在 390px 宽度实测通过。
 - `<head>` 增加 description、theme-color、OG、favicon；页面仍可离线双击打开，不依赖新增网络资源。
 - 回退：删除 `<style id="aiq-polish">` 整块与 head 中的 meta 块，或 `git revert` 对应提交。
+- 二轮深化：≥1100px 改为两栏工作台（左栏品牌+场次、右栏材料/强度/开始），问句加「当前追问」小标，报告页加刊头与指标卡上边线。
